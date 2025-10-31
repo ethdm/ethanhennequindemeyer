@@ -1,20 +1,20 @@
 ---
+import { Image } from 'astro:assets';
 import logo from '../assets/logo.webp';
 ---
 
-<header class="bg-white/20 backdrop-blur-sm">
-  <nav class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-4">
-      <img src={logo.src} alt="Logo" class="w-14 h-14" />
-      <h1 class="text-[28px] leading-none" style="font-family: 'Climate Crisis', sans-serif;">
-        Ethan Hennequin De meyer
-      </h1>
-    </div>
-    
-    <ul class="flex gap-8 items-center text-[28px]" style="font-family: 'Climate Crisis', sans-serif;">
-      <li><a href="/projets">Projets</a></li>
-      <li><a href="/a-propos">À propos</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
+<header class="flex items-center justify-between px-8 py-6 bg-white/30 backdrop-blur-md">
+  <div class="flex items-center">
+    <Image src={logo} alt="Logo" class="h-16 w-16" />
+  </div>
+  
+  <a href="/src/pages/index" class="text-[28px] font-normal" style="font-family: 'Climate Crisis', sans-serif;">
+    Ethan Hennequin De meyer
+  </h1>
+  
+  <nav class="flex gap-12 text-[28px] font-normal" style="font-family: 'Climate Crisis', sans-serif;">
+    <a href="#projets" class="hover:opacity-70 transition-opacity">Projets</a>
+    <a href="#apropos" class="hover:opacity-70 transition-opacity">À propos</a>
+    <a href="#contact" class="hover:opacity-70 transition-opacity">Contact</a>
   </nav>
 </header>
