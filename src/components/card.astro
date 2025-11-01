@@ -1,0 +1,54 @@
+---
+import { pb } from '../lib/pb';
+
+
+/**
+ * Props optionnelles:
+ *  - filter: string PocketBase filter, ex: 'categorie="Photographie"'
+ *  - sort: string, ex: '-created'
+ *  - perPage: number
+ */
+const { filter = '', sort = '-created', perPage = 12 } = Astro.props;
+
+const page = await pb.collection('card').getList(1, perPage, { filter, sort });
+
+// utilitaire pour URL d'image (thumb optionnelle)
+const fileUrl = (record, filename, opts = {}) => pb.files.getUrl(record, filename, opts);
+---
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {page.items.map((item) => (
+    <article class="relative isolate overflow-hidden rounded-lg bg-black text-white">
+      {/* Image plein cadre */}
+      <img
+        src={fileUrl(item, item.img)}
+        alt={item.titre}
+        class="h-[420px] w-full object-cover opacity-90"
+        loading="lazy"
+      />
+
+      {/* Overlay pour assurer la lisibilité comme vos maquettes */}
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40"></div>
+
+      {/* Categorie en haut-droite */}
+      <div class="absolute top-4 right-4">
+        <span class="font-[Climate_Crisis] text-[24px] tracking-wide uppercase drop-shadow-md">
+          {item.categorie}
+        </span>
+      </div>
+
+      {/* Date en bas-gauche */}
+      <div class="absolute bottom-4 left-4">
+        <span class="font-[Climate_Crisis] text-[24px] tracking-wide drop-shadow-md">
+          {item.date}
+        </span>
+      </div>
+
+      {/* Titre en bas (gros) */}
+      <div class="absolute bottom-2 right-4">
+        <h3 class="font-[Climate_Crisis] text-[64px] leading-none drop-shadow-xl">
+          {item.titre}
+        </h3>
+      </div>
+    </article>
+  ))}
+</div>

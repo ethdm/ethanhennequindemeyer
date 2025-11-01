@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-
+import Card from "../components/card.astro";
+import Footer from "../components/footer.astro";
 const categories = [
     {
         name: "Photographie",
@@ -61,6 +61,7 @@ const categories = [
         ],
     },
 ];
+
 ---
 
 
@@ -101,7 +102,7 @@ const categories = [
         >
             <path
                 d="M24 8V40M24 40L8 24M24 40L40 24"
-                stroke="white"
+                stroke="black"
                 stroke-width="3"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -243,7 +244,7 @@ const categories = [
   <!-- Qq proj -->
     <div class="flex justify-center items-center mt-10 py-16" id="qq-proj-section">
     <div
-        class="relative mx-5 w-[calc(100%-40px)] px-16 py-8 pt-5 pb-5 shadow-2xl hover:shadow-3xl transition-shadow"
+        class="relative mx-5 w-[calc(100%-40px)] px-16 py-8 pt-5 pb-5 hover:shadow-3xl transition-shadow"
         style="border-radius: 71px; background: radial-gradient(ellipse 100% 60% at center, #E5E5E7 0%, #7B00FF 100%); font-family: 'Climate Crisis', sans-serif;"
     >
         <h2
@@ -254,5 +255,8 @@ const categories = [
     </div>
 </div>
 
+  <!-- section projets -->
+
 
 </Layout>
+
