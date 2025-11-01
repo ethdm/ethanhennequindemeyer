@@ -3,18 +3,73 @@ import { Image } from 'astro:assets';
 import logo from '../assets/logo.webp';
 ---
 
-<header class="sticky top-0 flex items-center justify-between px-8 py-6 bg-white/30 backdrop-blur-md z-50">
-  <div class="flex items-center">
+<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-6 bg-white/30 backdrop-blur-md pointer-events-none">
+  <div class="flex items-center pointer-events-auto">
     <Image src={logo} alt="Logo" class="h-16 w-16" />
   </div>
-  
-  <a href="/src/pages/index" class="text-[28px] font-normal" style="font-family: 'Climate Crisis', sans-serif;">
+
+  <a href="/src/pages/index" class="text-[28px] font-normal pointer-events-auto " style="font-family: 'Climate Crisis', sans-serif;">
     Ethan Hennequin De meyer
-  </h1>
-  
-  <nav class="flex gap-12 text-[28px] font-normal" style="font-family: 'Climate Crisis', sans-serif;">
+  </a>
+
+  <button 
+    id="burger-btn" 
+    class="md:hidden pointer-events-auto flex flex-col gap-1.5"
+    aria-label="Menu"
+  >
+    <span class="w-6 h-0.5 bg-black block transition-all"></span>
+    <span class="w-6 h-0.5 bg-black block transition-all"></span>
+    <span class="w-6 h-0.5 bg-black block transition-all"></span>
+  </button>
+
+  <nav class="hidden md:flex gap-12 text-[28px] font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
     <a href="#projets" class="hover:opacity-70 transition-opacity">Projets</a>
     <a href="#apropos" class="hover:opacity-70 transition-opacity">À propos</a>
     <a href="#contact" class="hover:opacity-70 transition-opacity">Contact</a>
   </nav>
+
+  <nav 
+    id="mobile-nav" 
+    class="hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md flex flex-col gap-4 px-8 py-6 md:hidden pointer-events-auto"
+    style="font-family: 'Climate Crisis', sans-serif;"
+  >
+    <a href="#projets" class="text-[24px] font-normal hover:opacity-70 transition-opacity">Projets</a>
+    <a href="#apropos" class="text-[24px] font-normal hover:opacity-70 transition-opacity">À propos</a>
+    <a href="#contact" class="text-[24px] font-normal hover:opacity-70 transition-opacity">Contact</a>
+  </nav>
 </header>
+
+<script>
+  const burgerBtn = document.getElementById('burger-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  const lines = burgerBtn?.querySelectorAll('span');
+
+  burgerBtn?.addEventListener('click', () => {
+    mobileNav?.classList.toggle('hidden');
+    
+    if (lines) {
+      lines[0].style.transform = mobileNav?.classList.contains('hidden') 
+        ? 'rotate(0)' 
+        : 'rotate(45deg) translateY(10px)';
+      lines[1].style.opacity = mobileNav?.classList.contains('hidden') 
+        ? '1' 
+        : '0';
+      lines[2].style.transform = mobileNav?.classList.contains('hidden') 
+        ? 'rotate(0)' 
+        : 'rotate(-45deg) translateY(-10px)';
+    }
+  });
+
+  mobileNav?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.add('hidden');
+      if (lines) {
+        lines[0].style.transform = 'rotate(0)';
+        lines[1].style.opacity = '1';
+        lines[2].style.transform = 'rotate(0)';
+      }
+    });
+  });
+</script>
+
+
