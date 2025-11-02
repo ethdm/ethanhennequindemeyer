@@ -3,30 +3,25 @@ import Layout from "../layouts/Layout.astro";
 import PocketBase from "pocketbase";
 import CardItem from "../components/CardItem.astro";
 
-// Initialisation PocketBase côté serveur
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
   throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
 }
 const pb = new PocketBase(pbUrl);
 
-// 1) Récupération des cartes (accueil) triées croissant par created
 const res = await pb.collection("card_accueil").getList(1, 200, {
-  sort: "created", // croissant (ancien -> récent). Utilise "-created" pour décroissant.
+  sort: "created", 
 });
 
-// 2) Normalisation items + URL d'image
 const items = res.items.map((r) => ({
   record: r,
   imgUrl: r.img ? pb.files.getUrl(r, r.img) : ""
 }));
 
-// 3) Tri sécurisé (si tu veux assurer côté client)
 const sortedItems = [...items].sort(
   (a, b) => new Date(a.record.created).getTime() - new Date(b.record.created).getTime()
 );
 
-// 4) Catégories pour l'UI "Mes domaines" (avec traits, inchangées)
 const categoriesUI = [
   {
     name: "Photographie",
@@ -54,12 +49,10 @@ const categoriesUI = [
   },
 ];
 
-// 5) Catégories de filtre dérivées des records PB (uniques + triées A→Z)
 const categoriesFromPB = [...new Set(
   items.map(({ record }) => record.categorie).filter((v) => !!v)
 )].sort((a, b) => a.localeCompare(b));
 
-// 6) Filtre local via query param ?cat=...
 const urlCat = Astro.url.searchParams.get("cat");
 const filteredItems = urlCat && urlCat !== "ALL"
   ? sortedItems.filter(({ record }) => record.categorie === urlCat)
@@ -109,7 +102,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
     </div>
   </div>
 
-  <!-- Catégorie (UI riche avec traits) -->
+  <!-- Catégorie -->
   <div class="min-h-screen p-8">
     <div class="max-w-6xl mx-auto">
       <div class="ml-4 mb-8">
@@ -178,7 +171,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
     </div>
   </div>
 
-  <!-- Filtres catégories (strings) -->
+  <!-- Filtres catégories -->
   <section class="max-w-7xl mx-auto px-4 mb-8">
   <div class="flex flex-wrap gap-3">
     <a href="?cat=ALL"
@@ -194,21 +187,24 @@ const filteredItems = urlCat && urlCat !== "ALL"
 </section>
 
 
-  <!-- section projets: rendu des cards, alternées -->
-  <main class="mx-auto mb-5 max-w-6xl px-4 space-y-12">
-  {filteredItems.map(({ record, imgUrl }, i) => (
-    <div class="group">
-      <div
-        class="transition-transform transition-[filter] duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
-               group-hover:duration-250 group-hover:ease-[cubic-bezier(.2,.9,.2,1)]
-               group-active:scale-[0.995]
-               group-hover:scale-[1.09] group-hover:brightness-110"
-      >
-        <CardItem record={record} imgUrl={imgUrl} align={i % 2 === 0 ? "left" : "right"} />
+  <!-- section projets -->
+  <section class="mx-auto max-w-6xl px-4 mb-5 ">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 justify-items-center">
+    {filteredItems.slice(0, 6).map(({ record, imgUrl }, i) => (
+      <div class="w-[468px] group">
+        <!-- toute la carte est incluse dans la zone de hover -->
+        <div
+          class="will-change-transform transition-transform transition-[filter]
+                 duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
+                 group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
+                 group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+        >
+          <CardItem record={record} imgUrl={imgUrl} align={i % 2 === 0 ? "left" : "right"} />
+        </div>
       </div>
-    </div>
-  ))}
-</main>
+    ))}
+  </div>
+</section>
 
 
 </Layout>

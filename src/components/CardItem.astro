@@ -1,33 +1,40 @@
 ---
 const { record, imgUrl, align = "left" } = Astro.props;
-
 ---
 
 <div class={`flex ${align === "right" ? "sm:flex-row-reverse" : "sm:flex-row"} items-start gap-6`}>
-  <div class="relative bg-white overflow-hidden shadow-sm w-[520px] min-w-[520px] max-w-[520px] flex-none">
-    <div class="p-3.5">
+  <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
+    <div class="p-3">
       <div class="relative">
-        <img src={imgUrl} alt={record?.titre ?? "image"} class="w-full h-auto block" loading="lazy" />
+        <div class="aspect-[468/328] w-full overflow-hidden">
+          <img src={imgUrl} alt={record?.titre ?? "image"} class="w-full h-full object-cover" loading="lazy" />
+        </div>
 
-        <!-- overlays -->
         <div class="absolute top-3 right-4">
-          <span class="font-[ClimateCrisis] text-[24px] tracking-tight text-white">{record?.categorie}</span>
+          <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">{record?.categorie}</span>
         </div>
         <div class="absolute bottom-3 left-4">
-          <span class="font-[ClimateCrisis] text-[24px] tracking-tight text-white">{record?.date}</span>
+          <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">{record?.date}</span>
         </div>
       </div>
 
-      <!-- Titre sous image -->
+      <style>
+        .text-outline {
+          text-shadow:
+        -1px -1px 0 rgba(0,0,0,0.6),
+         1px -1px 0 rgba(0,0,0,0.6),
+        -1px  1px 0 rgba(0,0,0,0.6),
+         1px  1px 0 rgba(0,0,0,0.6);
+        }
+      </style>
+
       <div class={`w-full mt-3 ${align === "left" ? "sm:text-right" : "sm:text-left"}`}>
-        <h3 class="font-[ClimateCrisis] text-[42px] sm:text-[48px] leading-none mt-1">{record?.titre}</h3>
+        <h3 class="font-[ClimateCrisis] text-[38px] sm:text-[43px] leading-none mt-1">{record?.titre}</h3>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-  .font-\[ClimateCrisis\] {
-    font-family: "Climate Crisis", system-ui, sans-serif;
-  }
+  .font-\[ClimateCrisis\]{ font-family:"Climate Crisis", system-ui, sans-serif; }
 </style>
