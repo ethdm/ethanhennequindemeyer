@@ -1,8 +1,97 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import PocketBase from "pocketbase";
+import CardProjets from "../components/CardProjets.astro";
+
+const pbUrl = import.meta.env.PUBLIC_PB_URL;
+if (!pbUrl) {
+    throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
+}
+const pb = new PocketBase(pbUrl);
+
+const res = await pb.collection("card_p_projets").getList(1, 500, {
+    sort: "created",
+});
+
+const items = res.items.map((r) => ({
+    record: r,
+    imgUrl: r.img ? pb.files.getUrl(r, r.img) : ""
+}));
+
+function normalizeCategories(val: unknown): string[] {
+    if (Array.isArray(val)) return val.filter(Boolean);
+    if (typeof val === "string" && val.trim() !== "") return [val];
+    return [];
+}
+
+const mapByCat = new Map<string, { record: any; imgUrl: string }[]>();
+for (const it of items) {
+    const cats = normalizeCategories(it.record.categorie);
+    if (cats.length === 0) {
+        const key = "Sans catégorie";
+        mapByCat.set(key, [...(mapByCat.get(key) ?? []), it]);
+    } else {
+        for (const c of cats) {
+            mapByCat.set(c, [...(mapByCat.get(c) ?? []), it]);
+        }
+    }
+}
+
+const allCats = Array.from(mapByCat.keys()).sort((a, b) => {
+    if (a === "Sans catégorie") return 1;
+    if (b === "Sans catégorie") return -1;
+    return a.localeCompare(b);
+});
 ---
 
 <Layout>
+    <section class="mx-auto max-w-7xl px-4 space-y-14">
+        {allCats.map((cat) => {
+            const list = mapByCat.get(cat) ?? [];
+            return (
+                <div>
+                    <h2 class="mb-4 text-white"
+                            style="font-family: 'Climate Crisis', system-ui, sans-serif; font-size: 28px; letter-spacing: .5px;">
+                        {cat}
+                    </h2>
 
+                    <div class="relative mb-8">
+                        <div class="carousel-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth
+                                                [-ms-overflow-style:none] [scrollbar-width:none] pr-2"
+                                 style="scroll-padding-left: 0;">
+                            <style>
+                                .carousel-scroll::-webkit-scrollbar { display: none; }
+                            </style>
 
+                            {list.map(({ record, imgUrl }, i) => (
+                                <div class="snap-start shrink-0 w-[480px] h-[420px] group overflow-hidden">
+                                    <div
+                                        class="will-change-transform transition-transform transition-[filter]
+                                                     duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
+                                                     group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
+                                                     group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+                                    >
+                                        <CardProjets record={record} imgUrl={imgUrl} align={i % 2 === 0 ? "left" : "right"} />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <button class="nav-left absolute left-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
+                                                     h-10 w-10 rounded-full bg-black/50 text-white hover:bg-black/70"
+                                        aria-label="Précédent"
+                                        onclick="this.nextElementSibling.scrollBy({ left: -520, behavior: 'smooth' })">
+                            ‹
+                        </button>
+                        <button class="nav-right absolute right-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
+                                                        h-10 w-10 rounded-full bg-black/50 text-white hover:bg-black/70"
+                                        aria-label="Suivant"
+                                        onclick="this.previousElementSibling.scrollBy({ left: 520, behavior: 'smooth' })">
+                            ›
+                        </button>
+                    </div>
+                </div>
+            );
+        })}
+    </section>
 </Layout>

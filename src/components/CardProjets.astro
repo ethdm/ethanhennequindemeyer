@@ -1,0 +1,54 @@
+---
+const { record, imgUrl, align = "left" } = Astro.props;
+---
+
+<div class={`flex ${align === "right" ? "sm:flex-row-reverse" : "sm:flex-row"} items-start gap-6`}>
+  <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
+    <div class="p-3">
+      <div class="relative">
+        <!-- Image 468 x 328 -->
+        <div class="aspect-[468/328] w-full overflow-hidden">
+          <img
+            src={imgUrl}
+            alt={record?.titre ?? "image"}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Catégorie et date avec contour -->
+        <div class="absolute top-3 right-4">
+          <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">
+            {Array.isArray(record?.categorie) ? record.categorie.join(" / ") : record?.categorie}
+          </span>
+        </div>
+        <div class="absolute bottom-3 left-4">
+          <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">
+            {record?.date}
+          </span>
+        </div>
+      </div>
+
+      <style>
+        .text-outline {
+          text-shadow:
+            -1px -1px 0 rgba(0,0,0,0.6),
+             1px -1px 0 rgba(0,0,0,0.6),
+            -1px  1px 0 rgba(0,0,0,0.6),
+             1px  1px 0 rgba(0,0,0,0.6);
+        }
+      </style>
+
+      <!-- Titre -->
+      <div class={`w-full mt-3 ${align === "left" ? "sm:text-right" : "sm:text-left"}`}>
+        <h3 class="font-[ClimateCrisis] text-[38px] sm:text-[43px] leading-none mt-1">
+          {record?.titre}
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .font-\[ClimateCrisis\]{ font-family:"Climate Crisis", system-ui, sans-serif; }
+</style>
