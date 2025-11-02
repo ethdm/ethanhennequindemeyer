@@ -2,11 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import PocketBase from "pocketbase";
 import CardItem from "../components/CardItem.astro";
+import fond1 from '../assets/fond1.webp';
 
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
   throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
 }
+
+
 const pb = new PocketBase(pbUrl);
 
 const res = await pb.collection("card_accueil").getList(1, 200, {
@@ -58,8 +61,9 @@ const filteredItems = urlCat && urlCat !== "ALL"
   ? sortedItems.filter(({ record }) => record.categorie === urlCat)
   : sortedItems;
 ---
-
+<body style={`background-image: url('${fond1.src}');`}>
 <Layout>
+
   <!-- Titre -->
   <div class="flex flex-col items-center justify-center min-h-screen bg-transparent relative">
     <h1
@@ -208,3 +212,4 @@ const filteredItems = urlCat && urlCat !== "ALL"
 
 
 </Layout>
+</body>

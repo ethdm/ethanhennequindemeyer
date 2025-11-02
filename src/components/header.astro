@@ -4,12 +4,12 @@ import logo from '../assets/logo.webp';
 ---
 
 <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-6 bg-white/20 backdrop-blur-md pointer-events-none">
-  <div class="flex items-center pointer-events-auto">
+  <a href="/" class="flex items-center pointer-events-auto">
     <Image src={logo} alt="Logo" class="h-16 w-16" />
-  </div>
+  </a>
 
-  <a href="/" class="text-[28px] font-normal pointer-events-auto " style="font-family: 'Climate Crisis', sans-serif;">
-    Ethan Hennequin De meyer
+  <a href="/" class="text-[28px] font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
+    Ethan Hennequin De Meyer
   </a>
 
   <button 
@@ -23,9 +23,9 @@ import logo from '../assets/logo.webp';
   </button>
 
   <nav class="hidden md:flex gap-12 text-[28px] font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
-    <a href="/projets" class="hover:opacity-70 transition-opacity">Projets</a>
-    <a href="#apropos" class="hover:opacity-70 transition-opacity">À propos</a>
-    <a href="#contact" class="hover:opacity-70 transition-opacity">Contact</a>
+    <a href="/projets" class="hover:opacity-90 hover:-translate-y-0.5 transition">Projets</a>
+    <a href="#apropos" class="hover:opacity-90 hover:-translate-y-0.5 transition">À propos</a>
+    <a href="#contact" class="hover:opacity-90 hover:-translate-y-0.5 transition">Contact</a>
   </nav>
 
   <nav 
@@ -33,9 +33,9 @@ import logo from '../assets/logo.webp';
     class="hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md flex flex-col gap-4 px-8 py-6 md:hidden pointer-events-auto"
     style="font-family: 'Climate Crisis', sans-serif;"
   >
-    <a href="#projets" class="text-[24px] font-normal hover:opacity-70 transition-opacity">Projets</a>
-    <a href="#apropos" class="text-[24px] font-normal hover:opacity-70 transition-opacity">À propos</a>
-    <a href="#contact" class="text-[24px] font-normal hover:opacity-70 transition-opacity">Contact</a>
+    <a href="#projets" class="text-[24px] font-normal hover:opacity-90 hover:-translate-y-0.5 transition">Projets</a>
+    <a href="#apropos" class="text-[24px] font-normal hover:opacity-90 hover:-translate-y-0.5 transition">À propos</a>
+    <a href="#contact" class="text-[24px] font-normal hover:opacity-90 hover:-translate-y-0.5 transition">Contact</a>
   </nav>
 </header>
 
@@ -71,5 +71,3 @@ import logo from '../assets/logo.webp';
     });
   });
 </script>
-
-
