@@ -6,149 +6,199 @@ import fond2 from '../assets/fond2.webp';
 
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
-    throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
+  throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
 }
 const pb = new PocketBase(pbUrl);
 
 const res = await pb.collection("card_p_projets").getList(1, 500, {
-    sort: "created",
+  sort: "created",
 });
 
 const items = res.items.map((r) => ({
-    record: r,
-    imgUrl: r.img ? pb.files.getUrl(r, r.img) : ""
+  record: r,
+  imgUrl: r.img ? pb.files.getUrl(r, r.img) : ""
 }));
 
 function normalizeCategories(val: unknown): string[] {
-    if (Array.isArray(val)) return val.filter(Boolean);
-    if (typeof val === "string" && val.trim() !== "") return [val];
-    return [];
+  if (Array.isArray(val)) return val.filter(Boolean);
+  if (typeof val === "string" && val.trim() !== "") return [val];
+  return [];
 }
 
 const mapByCat = new Map<string, { record: any; imgUrl: string }[]>();
 for (const it of items) {
-    const cats = normalizeCategories(it.record.categorie);
-    if (cats.length === 0) {
-        const key = "Sans catégorie";
-        mapByCat.set(key, [...(mapByCat.get(key) ?? []), it]);
-    } else {
-        for (const c of cats) {
-            mapByCat.set(c, [...(mapByCat.get(c) ?? []), it]);
-        }
+  const cats = normalizeCategories(it.record.categorie);
+  if (cats.length === 0) {
+    const key = "Sans catégorie";
+    mapByCat.set(key, [...(mapByCat.get(key) ?? []), it]);
+  } else {
+    for (const c of cats) {
+      mapByCat.set(c, [...(mapByCat.get(c) ?? []), it]);
     }
+  }
 }
 
 const allCats = Array.from(mapByCat.keys()).sort((a, b) => {
-    if (a === "Sans catégorie") return 1;
-    if (b === "Sans catégorie") return -1;
-    return a.localeCompare(b);
+  if (a === "Sans catégorie") return 1;
+  if (b === "Sans catégorie") return -1;
+  return a.localeCompare(b);
 });
 
 function slugifyCat(cat: string) {
   return cat
+    .toString()
+    .trim()
     .toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, "et")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
-const catSlugs = Object.fromEntries(allCats.map(c => [c, slugifyCat(c || "sans-categorie")]));
 
+const slugCounts = new Map<string, number>();
+function uniqueSlug(cat: string) {
+  const base = slugifyCat(cat || "sans-categorie");
+  const n = (slugCounts.get(base) || 0) + 1;
+  slugCounts.set(base, n);
+  return n === 1 ? base : `${base}-${n}`;
+}
+
+const catToSlug = Object.fromEntries(allCats.map(c => [c, uniqueSlug(c)]));
 ---
-<body style={`background-image: url('${fond2.src}');`}>
+
+<body style={`background-image: url('${fond2.src}'); overflow-x: hidden;`}>
 
 <Layout>
 
-<section class="max-w-7xl mx-auto mt-34 px-4 sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:backdrop-blur mb-8">
-  <div class="flex flex-wrap gap-3 py-3">
-    <a href="#all"
-       class="px-3 py-1 rounded-full border border-black/20 hover:bg-black hover:text-white transition"
-       style="font-family:'Cal Sans'">Toutes</a>
+<!-- Styles scrollbar horizontale fine + masquage débordement -->
+<style is:global>
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Firefox */
+  .carousel-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.3) transparent;
+  }
+
+  /* Webkit (Chrome, Safari, Edge) */
+  .carousel-scroll::-webkit-scrollbar {
+    height: 6px;
+    background: transparent;
+  }
+  .carousel-scroll::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.15);
+    border-radius: 0; /* pas de radius */
+    margin-inline: 246px; /* limite la largeur à la zone de contenu */
+  }
+  .carousel-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.4);
+    border-radius: 0; /* pas de radius */
+    transition: background 0.2s;
+  }
+  .carousel-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.6);
+  }
+  /* Supprime les boutons/flèches */
+  .carousel-scroll::-webkit-scrollbar-button {
+    display: none;
+  }
+</style>
+
+<!-- Barre d'ancres catégories -->
+<section class="max-w-7xl mx-auto px-4 mt-34 mb-8">
+  <div class="flex flex-wrap gap-3">
+    <a href="#all" class="px-3 py-1 rounded-full border border-black/20 hover:bg-black hover:text-white transition" style="font-family:'Cal Sans'">Toutes</a>
 
     {allCats.map((cat) => (
-      <a href={`#${catSlugs[cat]}`}
-         class="category-chip px-3 py-1 rounded-full border border-black/20 hover:bg-black hover:text-white transition"
-         style="font-family:'Cal Sans'"}>{cat}</a>
+      <a
+        href={`#${catToSlug[cat]}`}
+        class="px-3 py-1 rounded-full border border-black/20 hover:bg-black hover:text-white transition"
+        style="font-family:'Cal Sans'"
+      >
+        {cat}
+      </a>
     ))}
   </div>
 </section>
 
-    
+<!-- Section carousels -->
+<section id="all" class="mx-auto max-w-full overflow-hidden space-y-14">
+  {allCats.map((cat) => {
+    const list = mapByCat.get(cat) ?? [];
+    const id = catToSlug[cat];
+    return (
+      <div id={id} class="scroll-mt-28">
+        <h2 class="mb-4 pl-9 text-white" style="font-family: 'Climate Crisis', system-ui, sans-serif; font-size: 28px; letter-spacing: .5px;">
+          {cat}
+        </h2>
 
-    <section id="all" class=" mx-auto max-w-7xl px-4 space-y-14 ">
-        {allCats.map((cat) => {
-            const list = mapByCat.get(cat) ?? [];
-            return (
-                <div>
-                    <h2 class="mb-4 text-white"
-                            style="font-family: 'Climate Crisis', system-ui, sans-serif; font-size: 28px; letter-spacing: .5px;">
-                        {cat}
-                    </h2>
-
-                    <div class="relative mb-8">
-                        <div class="carousel-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth
-                                                [-ms-overflow-style:none] [scrollbar-width:none] pr-2 pl-5 pb-5 pt-5"
-                                 style="scroll-padding-left: 0;">
-                            <style>
-                                .carousel-scroll::-webkit-scrollbar { display: none; }
-                            </style>
-
-                            {list.map(({ record, imgUrl }, i) => (
-                                <div class="snap-center shrink-0 w-[468px] group">
-                                  <div class="relative group-hover:z-20">
-                                    <div
-                                      class="will-change-transform transition-transform transition-[filter]
-                                             duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
-                                             group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
-                                             group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
-                                    >
-                                        <CardProjets record={record} imgUrl={imgUrl} align={i % 2 === 0 ? "left" : "right"} />
-                                    </div>
-                                </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <button
-                          class="carousel-btn left absolute left-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
-                                 h-14 w-14 text-white/90 hover:text-white transition-colors z-[9999] pointer-events-auto"
-                          aria-label="Précédent"
-                          onclick="
-                            const root = this.closest('.relative');
-                            const scroller = root?.querySelector('.carousel-scroll');
-                            if (scroller) scroller.scrollBy({ left: -492, behavior: 'smooth' });
-                          "
-                        >
-                          <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                            <path d="M30 10 L18 24 L30 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </button>
-
-                        <button
-                          class="carousel-btn right absolute right-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
-                                 h-14 w-14 text-white/90 hover:text-white transition-colors z-[9999] pointer-events-auto"
-                          aria-label="Suivant"
-                          onclick="
-                            const root = this.closest('.relative');
-                            const scroller = root?.querySelector('.carousel-scroll');
-                            if (scroller) scroller.scrollBy({ left: 492, behavior: 'smooth' });
-                          "
-                        >
-                          <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                            <path d="M18 10 L30 24 L18 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </button>
-
-                    </div>
+        <div class="relative mb-8">
+          <div
+            class="carousel-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth
+                   px-[246px] pb-2 pt-5 mb-3"
+            style="scroll-padding-inline: 246px;"
+          >
+            {list.map(({ record, imgUrl }, i) => (
+              <div class="snap-center shrink-0 w-[468px] group">
+                <div class="relative group-hover:z-20">
+                  <div
+                    class="will-change-transform transition-transform transition-[filter]
+                           duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
+                           group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
+                           group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+                  >
+                    <CardProjets record={record} imgUrl={imgUrl} align={i % 2 === 0 ? "left" : "right"} />
+                  </div>
                 </div>
-            );
-        })}
-    </section>
-    
+              </div>
+            ))}
+          </div>
+
+          <!-- Flèche gauche -->
+          <button
+            class="carousel-btn left absolute left-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
+                   h-14 w-14 text-white/90 hover:text-white transition-colors z-[9999] pointer-events-auto"
+            aria-label="Précédent"
+            onclick="
+              const root = this.closest('.relative');
+              const scroller = root?.querySelector('.carousel-scroll');
+              if (scroller) scroller.scrollBy({ left: -492, behavior: 'smooth' });
+            "
+          >
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M30 10 L18 24 L30 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <!-- Flèche droite -->
+          <button
+            class="carousel-btn right absolute right-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
+                   h-14 w-14 text-white/90 hover:text-white transition-colors z-[9999] pointer-events-auto"
+            aria-label="Suivant"
+            onclick="
+              const root = this.closest('.relative');
+              const scroller = root?.querySelector('.carousel-scroll');
+              if (scroller) scroller.scrollBy({ left: 492, behavior: 'smooth' });
+            "
+          >
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <path d="M18 10 L30 24 L18 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  })}
+</section>
+
 </Layout>
 
 </body>
 
-
+<!-- Script ancres smooth + surbrillance active -->
 <script type="module">
   // Scroll doux pour toutes les ancres internes
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -164,14 +214,13 @@ const catSlugs = Object.fromEntries(allCats.map(c => [c, slugifyCat(c || "sans-c
 
   // Surbrillance de la puce active au scroll
   const chips = new Map();
-  document.querySelectorAll('.category-chip').forEach(chip => {
+  document.querySelectorAll('a[href^="#"]').forEach(chip => {
     const href = chip.getAttribute('href') || "";
     const id = href.startsWith('#') ? href.slice(1) : "";
-    if (id) chips.set(id, chip);
+    if (id && id !== "all") chips.set(id, chip);
   });
 
   const observer = new IntersectionObserver((entries) => {
-    // Choisit la section la plus visible
     const visible = entries
       .filter(e => e.isIntersecting)
       .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -185,5 +234,14 @@ const catSlugs = Object.fromEntries(allCats.map(c => [c, slugifyCat(c || "sans-c
 
   document.querySelectorAll('[id]').forEach(sec => {
     if (chips.has(sec.id)) observer.observe(sec);
+  });
+</script>
+
+<!-- Script centrage initial des carousels -->
+<script type="module">
+  document.querySelectorAll('.carousel-scroll').forEach((scroller) => {
+    requestAnimationFrame(() => {
+      scroller.scrollTo({ left: 0, behavior: 'auto' });
+    });
   });
 </script>
