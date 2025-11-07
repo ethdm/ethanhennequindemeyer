@@ -5,19 +5,22 @@ import fond1 from '../assets/fond1.webp';
 import Footer from '../components/footer.astro';
 ---
 
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
   <body
-    class="bg-fixed bg-cover bg-center bg-no-repeat"
+    class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"
+    style={`background-image: url('${fond1.src}');`}
   >
     <Header />
+
 
     <slot />
     

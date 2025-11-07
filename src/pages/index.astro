@@ -4,26 +4,32 @@ import PocketBase from "pocketbase";
 import CardItem from "../components/CardItem.astro";
 import fond1 from '../assets/fond1.webp';
 
+
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
   throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
 }
 
 
+
 const pb = new PocketBase(pbUrl);
+
 
 const res = await pb.collection("card_accueil").getList(1, 200, {
   sort: "created", 
 });
+
 
 const items = res.items.map((r) => ({
   record: r,
   imgUrl: r.img ? pb.files.getUrl(r, r.img) : ""
 }));
 
+
 const sortedItems = [...items].sort(
   (a, b) => new Date(a.record.created).getTime() - new Date(b.record.created).getTime()
 );
+
 
 const categoriesUI = [
   {
@@ -52,9 +58,11 @@ const categoriesUI = [
   },
 ];
 
+
 const categoriesFromPB = [...new Set(
   items.map(({ record }) => record.categorie).filter((v) => !!v)
 )].sort((a, b) => a.localeCompare(b));
+
 
 const urlCat = Astro.url.searchParams.get("cat");
 const filteredItems = urlCat && urlCat !== "ALL"
@@ -64,12 +72,13 @@ const filteredItems = urlCat && urlCat !== "ALL"
 <body style={`background-image: url('${fond1.src}');`}>
 <Layout>
 
+
   <!-- Titre -->
   <div class="flex flex-col items-center justify-center min-h-screen bg-transparent relative">
     <h1
-      class="text-center text-[60px] px-12"
+      class="text-center text-[32px] sm:text-[48px] md:text-[60px] px-4 sm:px-8 md:px-12"
       style="font-family: 'Climate Crisis', sans-serif;
-             -webkit-text-stroke-width: 57px;
+             -webkit-text-stroke-width: 30px;
              -webkit-text-stroke-color: transparent;
              -webkit-text-fill-color: white;
              color: white;
@@ -81,23 +90,25 @@ const filteredItems = urlCat && urlCat !== "ALL"
       Ethan<br />HENNEQUIN DE MEYER
     </h1>
 
+
     <!-- Flèche vers Qq proj -->
     <button
       onclick="document.getElementById('qq-proj-section').scrollIntoView({ behavior: 'smooth' })"
-      class="absolute bottom-8 animate-bounce cursor-pointer hover:opacity-80 transition-opacity"
+      class="absolute bottom-4 sm:bottom-8 animate-bounce cursor-pointer hover:opacity-80 transition-opacity"
       aria-label="Descendre vers les projets"
     >
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="sm:w-12 sm:h-12">
         <path d="M24 8V40M24 40L8 24M24 40L40 24" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
     </button>
   </div>
 
+
   <!-- Defilement -->
-  <div class="bg-transparent overflow-hidden h-12 w-full relative -translate-y-12">
+  <div class="bg-transparent overflow-hidden h-8 sm:h-12 w-full relative -translate-y-8 sm:-translate-y-12">
     <style>
       @keyframes scroll { 0% { transform: translateX(0%);} 100% { transform: translateX(-100%);} }
-      .scrolling-text { display:inline-block; white-space:nowrap; animation:scroll 20s linear infinite; font-family:"Cal Sans",sans-serif; font-size:24px; color:black; padding-right:50px; }
+      .scrolling-text { display:inline-block; white-space:nowrap; animation:scroll 20s linear infinite; font-family:"Cal Sans",sans-serif; font-size:clamp(14px, 4vw, 24px); color:black; padding-right:50px; }
       .scrolling-container { display:flex; height:100%; align-items:center; width:fit-content; }
     </style>
     <div class="scrolling-container">
@@ -106,37 +117,42 @@ const filteredItems = urlCat && urlCat !== "ALL"
     </div>
   </div>
 
+
   <!-- Catégorie -->
-  <div class="min-h-screen p-8">
+    <div class="hidden md:block min-h-screen p-4 sm:p-6 md:p-8">
     <div class="max-w-6xl mx-auto">
-      <div class="ml-4 mb-8">
+      <div class="ml-2 sm:ml-4 mb-8">
         <h1
           style="font-family: 'Climate Crisis'; -webkit-text-stroke: 2px #CAFB23; paint-order: stroke fill;"
-          class="text-[32px] text-black"
+          class="text-[24px] sm:text-[28px] md:text-[32px] text-black"
         >
           Mes domaines
         </h1>
       </div>
 
-      <div class="space-y-20">
+
+
+      <div class="space-y-12 md:space-y-20">
         {
           categoriesUI.map((category, index) => (
-            <div key={index} class="group flex items-start gap-12 cursor-pointer h-[45px]">
-              <div class="w-64 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <ul class="space-y-2">
+            <div key={index} class="group flex flex-col md:flex-row md:items-start gap-4 md:gap-12 cursor-pointer md:h-[45px]">
+              <div class="w-full md:w-64 md:flex-shrink-0 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                <ul class="space-y-1 md:space-y-2">
                   {(category.traits ?? []).map((trait, traitIndex) => (
-                    <li key={traitIndex} class="flex items-start gap-3">
-                      <span class="text-black text-2xl mt-0">•</span>
-                      <span style="font-family: 'Cal Sans'" class="text-black text-[24px] leading-tight">{trait}</span>
+                    <li key={traitIndex} class="flex items-start gap-2 md:gap-3">
+                      <span class="text-black text-lg md:text-2xl mt-0 flex-shrink-0">•</span>
+                      <span style="font-family: 'Cal Sans'" class="text-black text-[14px] sm:text-[18px] md:text-[24px] leading-tight">{trait}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
+
+
               <div class="flex-grow group/title">
                 <h2
                   style="font-family: 'Climate Crisis'; -webkit-text-stroke: 2px #CAFB23; paint-order: stroke fill; color: black;"
-                  class="text-[48px] transition-all duration-300 hover:bg-transparent"
+                  class="text-[28px] sm:text-[36px] md:text-[48px] transition-all duration-300 hover:bg-transparent"
                   onmouseover="this.style.color='#CAFB23'; this.style.WebkitTextStroke='1px black';"
                   onmouseout="this.style.color='black'; this.style.WebkitTextStroke='2px #CAFB23';"
                 >
@@ -144,9 +160,11 @@ const filteredItems = urlCat && urlCat !== "ALL"
                 </h2>
               </div>
 
+
+
               {index === 0 && (
-                <div class="w-80 flex-shrink-0">
-                  <p style="font-family: 'Cal Sans'" class="text-[24px] text-black leading-tight">
+                <div class="w-full md:w-80 md:flex-shrink-0">
+                  <p style="font-family: 'Cal Sans'" class="text-[14px] sm:text-[18px] md:text-[24px] text-black leading-tight">
                     Je suis polyvalent, c'est l'essence même de mon univers créatif.
                     <br /><br />
                     Œuvrer sur de différents supports avec des idées variés et toujours originale.
@@ -160,42 +178,31 @@ const filteredItems = urlCat && urlCat !== "ALL"
     </div>
   </div>
 
+
+
   <style>
     .domain-title { -webkit-text-stroke: 2px #CAFB23; paint-order: stroke fill; transition: color .25s, -webkit-text-stroke-color .25s; }
     .domain-title:hover { color:#CAFB23; -webkit-text-stroke:1px black; }
   </style>
 
+
+
   <!-- Qq proj -->
-  <div class="flex justify-center items-center mt-10 py-16" id="qq-proj-section">
+  <div class="flex justify-center items-center mt-6 sm:mt-10 py-8 sm:py-16" id="qq-proj-section">
     <div
-      class="relative mx-5 w-[calc(100%-40px)] px-16 py-8 pt-5 pb-5 hover:shadow-3xl transition-shadow"
-      style="border-radius: 71px; background: radial-gradient(ellipse 100% 60% at center, #E5E5E7 0%, #7B00FF 100%); font-family: 'Climate Crisis', sans-serif;"
+      class="relative mx-4 sm:mx-5 w-[calc(100%-32px)] sm:w-[calc(100%-40px)] px-4 sm:px-8 md:px-16 py-4 sm:py-8 sm:pt-5 sm:pb-5 hover:shadow-3xl transition-shadow"
+      style="border-radius: clamp(40px, 10vw, 71px); background: radial-gradient(ellipse 100% 60% at center, #E5E5E7 0%, #7B00FF 100%); font-family: 'Climate Crisis', sans-serif;"
     >
-      <h2 class="text-4xl font-black text-black text-center">Quelques projets...</h2>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-black text-center">Quelques projets...</h2>
     </div>
   </div>
 
-  <!-- Filtres catégories -->
-  <section class="max-w-7xl mx-auto px-4 mb-8">
-  <div class="flex flex-wrap gap-3">
-    <a href="?cat=ALL"
-       class="px-3 py-1 rounded-full border border-black/20 hover:bg-black hover:text-white transition"
-       style="font-family:'Cal Sans'">Toutes</a>
-
-    {categoriesFromPB.map((cat) => (
-      <a href={`?cat=${encodeURIComponent(cat)}`}
-         class="px-3 py-1 rounded-full border border-black/20 hover:bg-black hover:text-white transition"
-         style="font-family:'Cal Sans'">{cat}</a>
-    ))}
-  </div>
-</section>
-
 
   <!-- section projets -->
-  <section class="mx-auto max-w-6xl px-4 mb-5 ">
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 justify-items-center">
+  <section class="mx-auto max-w-6xl px-4 mb-5">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-x-8 md:gap-y-10 justify-items-center">
     {filteredItems.slice(0, 6).map(({ record, imgUrl }, i) => (
-      <div class="w-[468px] group">
+      <div class="w-full sm:w-[400px] md:w-[468px] group">
         <!-- toute la carte est incluse dans la zone de hover -->
         <div
           class="will-change-transform transition-transform transition-[filter]
@@ -209,6 +216,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
     ))}
   </div>
 </section>
+
 
 
 </Layout>
