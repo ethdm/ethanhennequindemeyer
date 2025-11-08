@@ -7,122 +7,229 @@ import f4 from "../assets/Page_thea/f4.webp";
 import f5 from "../assets/Page_thea/f5.webp";
 import f6 from "../assets/Page_thea/f6.webp";
 import f7 from "../assets/Page_thea/f7.webp";
+import fond2 from "../assets/fond2.webp";
 ---
 
-<Layout>
-    <div class="flex flex-col gap-0">
-        <img src={f1.src} alt="Image 1" class="w-full relative z-0" />
-        <div
-            class="absolute top-50 left-7 text-white"
-            style="font-family: 'Climate Crisis'; font-size: 60px;"
-        >
-            THÉA
-        </div>
-        <div
-            class="absolute top-74 left-83 text-white"
-            style="font-family: 'Cal Sans'; font-size: 16px;"
-        >
-            ​<strong
-                >J'ai eu la chance d'assister deux fois aux concerts de THÉA
-                cette année, et ces séries photographiques retranscrivent
-                l'univers puissant de son emocore, nourri par des influences
-                hyperpop, hardrock et techno.</strong
-            >
-            <strong
-                >Théa Barromes, artiste queer autodésignée
-                "emo-mélo-drama-queen", transforme ses tourments en une
-                bacchanale festive. Ses textes viscéraux sur les questions queer
-                et féministes deviennent des électrochocs technoïdes lacérés par
-                des impacts punk.​</strong
-            >
-            <strong
-                >Les shoots, illustre l'esthétique tripartite de son univers
-                scénique. Le rouge et le vert incarnent l'énergie punk, le bleu
-                reflète la dimension hyperpop-techno, et le noir et blanc
-                symbolise la mélancolie de ses textes. Ces images traduisent
-                visuellement l'expérience d'un live de THÉA, où chaque chanson
-                devient un exutoire collectif.</strong
-            >
-        </div>
-
-        <img src={f2.src} alt="Image 2" class="w-full relative z-20" />
-        <div class="relative">
-            <img
-                src={f3.src}
-                alt="Image 3"
-                class="w-full -mt-60 relative z-0"
-            />
-
-            {/* Texte positionné en absolu */}
-            <div class="absolute bottom-[80px] right-[50px] z-10 w-1/3">
+<body style="background-color: #1b162d; overflow-x: hidden;">
+    <Layout>
+        <div class="ml-7 mr-7">
+            <div class="flex flex-col gap-0">
+                <img src={f1.src} alt="Image 1" class="w-full relative z-0" />
                 <div
-                    class="border-2 border-[#C32535] p-4"
-                    style="background-color: #C32535;"
+                    class="absolute top-45 left-27 text-white"
+                    style="font-family: 'Climate Crisis'; font-size: 80px;"
                 >
-                    <p
-                        class="text-black font-sans text-base leading-relaxed"
-                        style="
-        -webkit-text-stroke: 1px black;
-        paint-order: stroke fill;
-      "
-                    >
-                        La série «RED» déploie une ambiance saturée de rouges
-                        profonds, où la lumière scénique taquine la fumée et
-                        fait vibrer la scène d'une intensité viscérale.
-                    </p>
-
-                    <p
-                        class="text-black font-sans text-base leading-relaxed mt-4"
-                        style="
-        -webkit-text-stroke: 1px black;
-        paint-order: stroke fill;
-      "
-                    >
-                        Ce traitement accentue le côté explosif et anarchique
-                        des concerts de THÉA, en témoignage de la rage et de la
-                        communion dont elle fait preuve sur scène.
-                    </p>
+                    THÉA
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="relative">
-        <img src={f4.src} alt="Image 4" class="w-full relative -mt-10 z-10" />
-
-        {/* Texte positionné en absolu */}
-        <div class="relative">
-            <img
-                src={f4.src}
-                alt="Image 4"
-                class="w-full relative -mt-10 z-10"
-            />
-
-            {/* Texte positionné en absolu */}
-            <div class="absolute bottom-[80px] right-[50px] z-20 w-1/3">
                 <div
-                    class="p-8"
+                    class="absolute top-71 left-88 text-white w-1/3"
+                    style="font-family: 'Cal Sans'; font-size: 16px;"
+                >
+                    J'ai eu la chance d'assister deux fois aux concerts de THÉA
+                    cette année, et ces séries photographiques retranscrivent
+                    l'univers puissant de son emocore, nourri par des influences
+                    hyperpop, hardrock et techno.<br /><br />
+
+                    Théa Barromes, artiste queer autodésignée
+                    "emo-mélo-drama-queen", transforme ses tourments en une
+                    bacchanale festive. Ses textes viscéraux sur les questions
+                    queer et féministes deviennent des électrochocs technoïdes
+                    lacérés par des impacts punk.​<br /><br />
+
+                    Les shoots, illustre l'esthétique tripartite de son univers
+                    scénique. Le rouge et le vert incarnent l'énergie punk, le
+                    bleu reflète la dimension hyperpop-techno, et le noir et
+                    blanc symbolise la mélancolie de ses textes. Ces images
+                    traduisent visuellement l'expérience d'un live de THÉA, où
+                    chaque chanson devient un exutoire collectif.
+                </div>
+                <div
+                    class="absolute -bottom-0 left-1/2 -translate-x-1/2"
                     style="
-      background-color: #3817C9;
-      border: 2px solid #29243E;
-      box-shadow: inset 0 0 0 1px #29243E;
-      outline: 1px solid #29243E;
+        font-family: 'Climate Crisis'; 
+        font-size: 80px;
+        background: linear-gradient(to right, #000000, #C40000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     "
                 >
-                    <p
-                        class="font-sans leading-relaxed"
-                        style="font-family: 'Cal Sans'; font-size: 16px; #29243E;"
-                    >
-                        Les ambiances bleutées plongent dans un univers
-                        onirique, où l'artiste se livre sous des halos
-                        électriques. La lumière bleue accentue la sensibilité
-                        hyperpop et l'aspect presque irréel du moment.
-                    </p>
+                    RED
+                </div>
+
+                <img src={f2.src} alt="Image 2" class="w-full relative z-20" />
+                <div class="relative">
+                    <img
+                        src={f3.src}
+                        alt="Image 3"
+                        class="w-full -mt-60 relative z-0"
+                    />
+
+                    {/* Texte positionné en absolu */}
+                    <div class="absolute bottom-[80px] right-[50px] z-10 w-1/3">
+                        <div
+                            class="border-2 border-[#C32535] p-4"
+                            style="background-color: #C32535;
+                    border: 4px solid black;"
+                        >
+                            <p
+                                class="text-black font-sans text-base leading-relaxed"
+                                style="
+        -webkit-text-stroke: 1px black;
+        paint-order: stroke fill;
+      "
+                            >
+                                La série «RED» déploie une ambiance saturée de
+                                rouges profonds, où la lumière scénique taquine
+                                la fumée et fait vibrer la scène d'une intensité
+                                viscérale.
+                            </p>
+
+                            <p
+                                class="text-black font-sans text-base leading-relaxed mt-4"
+                                style="
+        -webkit-text-stroke: 1px black;
+        paint-order: stroke fill;
+      "
+                            >
+                                Ce traitement accentue le côté explosif et
+                                anarchique des concerts de THÉA, en témoignage
+                                de la rage et de la communion dont elle fait
+                                preuve sur scène.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <img src={f5.src} alt="Image 5" class="w-full relative z-30" />
-    <img src={f6.src} alt="Image 6" class="w-full relative -mt-40 z-0" />
-    <img src={f7.src} alt="Image 7" class="w-full relative z-0" />
-</Layout>
+            {/* Texte positionné en absolu */}
+
+            <div class="relative">
+                <img
+                    src={f4.src}
+                    alt="Image 4"
+                    class="w-full relative -mt-10 z-10"
+                />
+
+                <div class="absolute bottom-[425px] right-[50px] z-20 w-1/5">
+                    <div
+                        class="p-4"
+                        style="
+      background-color: #3817C9;
+      border: 2px solid #100d16;
+      box-shadow: inset 0 0 0 1px #100d16;
+      outline: 1px solid #100d16;
+    "
+                    >
+                        <p
+                            class="text-base leading-relaxed"
+                            style="font-family: 'Cal Sans'; color: #100d16;"
+                        >
+                            Les ambiances bleutées plongent dans un univers
+                            onirique, où l'artiste se livre sous des halos
+                            électriques. La lumière bleue accentue la
+                            sensibilité hyperpop et l'aspect presque irréel du
+                            moment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+<div
+                    class="absolute -bottom-780 left-95 -translate-x-1/2 z-50"
+                    style="
+        font-family: 'Climate Crisis'; 
+        font-size: 80px;
+        background: linear-gradient(to right, #CB51EF, #692AAD);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    "
+                >
+                    BLUE
+                </div>
+            <img src={f5.src} alt="Image 5" class="w-full relative z-30" />
+            <div
+                    class="absolute -bottom-1120 left-200 -translate-x-1/2 z-50"
+                    style="
+        font-family: 'Climate Crisis'; 
+        font-size: 80px;
+        background: linear-gradient(to right, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    "
+                >
+                    N & B
+                </div>
+            <div class="relative">
+                <img
+                    src={f6.src}
+                    alt="Image 6"
+                    class="w-full relative -mt-40 z-0"
+                />
+
+                {/* Texte positionné en absolu */}
+                <div class="absolute top-[50px] left-[100px] z-10 w-1/4">
+                    <div
+                        class="p-4"
+                        style="
+      background-color: #0E0E0E;
+      border: 2px solid #0E0E0E;
+      box-shadow: inset 0 0 0 1px #0E0E0E;
+      outline: 1px solid #0E0E0E;
+    "
+                    >
+                        <p
+                            class="font-sans text-base leading-relaxed"
+                            style="font-family: 'Cal Sans'; color: #ffffff;"
+                        >
+                            Le noir et blanc révèle la part d’intimité et
+                            d’émotion, mettant en avant les regards et
+                            gestuelles. Ce parti-pris donne une force narrative
+                            : il ramène le spectateur à l’essence du live.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <img src={f7.src} alt="Image 7" class="w-full relative z-0" />
+
+                {/* Texte positionné en absolu */}
+                <div class="absolute bottom-[78px] right-[100px] z-10 w-1/4">
+                    <div
+                        class="p-4"
+                        style="
+      background-color: #002D10;
+      border: 2px solid #008A29;
+      box-shadow: inset 0 0 0 1px #008A29;
+      outline: 1px solid #008A29;
+    "
+                    >
+                        <p
+                            class="font-sans text-base leading-relaxed"
+                            style="font-family: 'Cal Sans'; color: #ffffff;"
+                        >
+                            Les tons verts saturés soulignent le côté profond et
+                            mystérieux du spectacle. La couleur donne une
+                            dimension électro à la série, traduisant autant la
+                            modernité que l’énergie brute du show.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div
+                    class="absolute -bottom-1285 left-80 -translate-x-1/2 z-50"
+                    style="
+        font-family: 'Climate Crisis'; 
+        font-size: 80px;
+        background: linear-gradient(to right, #BCC78D, #01D94D);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    "
+                >
+                    GREEN
+                </div>
+        </div>
+    </Layout>
+</body>
