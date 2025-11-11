@@ -1,8 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 import PocketBase from "pocketbase";
-import CardProjets from "../components/CardProjets.astro";
-import fond2 from "../assets/fond2.webp";
+import CardProjets from "../../components/CardProjets.astro";
+import fond2 from "../../assets/fond2.webp";
 
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
@@ -166,7 +166,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                                 <div class="relative">
                                   <div class="aspect-[468/328] w-full overflow-hidden">
                                     <img
-                                      src="src/assets/card/thea.webp"
+                                      src="/src/assets/card/thea.webp"
                                       alt="THÉA"
                                       class="w-full h-full object-cover"
                                       loading="lazy"
@@ -200,13 +200,16 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
 
                   {/* Cartes dynamiques */}
                   {list.map(({ record, imgUrl }, i) => (
-                    <div class="snap-center shrink-0 w-[468px] group">
+                    <a
+                      href={`/doss/${record.page_autre}`}
+                      class="snap-center shrink-0 w-[468px] group block"
+                    >
                       <div class="relative group-hover:z-20">
                         <div
                           class="will-change-transform transition-transform transition-[filter]
-                           duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
-                           group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
-                           group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+                          duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
+                          group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
+                          group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
                         >
                           <CardProjets
                             record={record}
@@ -215,7 +218,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                           />
                         </div>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </div>

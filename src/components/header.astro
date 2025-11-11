@@ -3,12 +3,12 @@ import { Image } from 'astro:assets';
 import logo from '../assets/logo.webp';
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-6 bg-white/20 backdrop-blur-md pointer-events-none">
+<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-6 bg-[#692AAD80]/85 backdrop-blur-md pointer-events-none">
   <a href="/" class="flex items-center pointer-events-auto">
     <Image src={logo} alt="Logo" class="h-16 w-16" />
   </a>
 
-  <a href="/" class="text-[28px] font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
+  <a href="/" class="text-[28px] text-white font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
     Ethan Hennequin De Meyer
   </a>
 
@@ -17,15 +17,15 @@ import logo from '../assets/logo.webp';
     class="md:hidden pointer-events-auto flex flex-col gap-1.5"
     aria-label="Menu"
   >
-    <span class="w-6 h-0.5 bg-black block transition-all"></span>
-    <span class="w-6 h-0.5 bg-black block transition-all"></span>
-    <span class="w-6 h-0.5 bg-black block transition-all"></span>
+    <span class="w-6 h-0.5 block transition-all"></span>
+    <span class="w-6 h-0.5 block transition-all"></span>
+    <span class="w-6 h-0.5 block transition-all"></span>
   </button>
 
   <nav class="hidden md:flex gap-12 text-[28px] font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
-    <a href="/projets" class="hover:opacity-90 hover:-translate-y-0.5 transition">Projets</a>
-    <a href="#apropos" class="hover:opacity-90 hover:-translate-y-0.5 transition">À propos</a>
-    <a href="#contact" class="hover:opacity-90 hover:-translate-y-0.5 transition">Contact</a>
+    <a href="/doss/projets" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">Projets</a>
+    <a href="#apropos" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">À propos</a>
+    <a href="#contact" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">Contact</a>
   </nav>
 
   <nav 
