@@ -1,0 +1,36 @@
+---
+// CustomCursor.astro
+---
+
+<div id="custom-cursor" class="fixed pointer-events-none z-50 text-white text-2xl font-bold mix-blend-difference" style="font-family: 'Climate Crisis', sans-serif; text-[15px];">
+  s
+</div>
+
+<style>
+  body {
+    cursor: none;
+  }
+</style>
+
+<script>
+  const cursor = document.getElementById('custom-cursor');
+  const characters = ['s', 'p', 'l', 'm', 'o', '7', '4', '1', '0'];
+  let currentIndex = 0;
+
+  // Suivre la position de la souris
+  document.addEventListener('mousemove', (e) => {
+    if (cursor) {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+      cursor.style.transform = 'translate(-50%, -50%)';
+    }
+  });
+
+  // Changer le caractère en permanence
+  setInterval(() => {
+    if (cursor) {
+      currentIndex = (currentIndex + 1) % characters.length;
+      cursor.textContent = characters[currentIndex];
+    }
+  }, 150); // Change toutes les 150ms
+</script>

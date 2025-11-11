@@ -199,27 +199,39 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                   )}
 
                   {/* Cartes dynamiques */}
-                  {list.map(({ record, imgUrl }, i) => (
-                    <a
-                      href={`/doss/${record.page_autre}`}
-                      class="snap-center shrink-0 w-[468px] group block"
-                    >
-                      <div class="relative group-hover:z-20">
-                        <div
-                          class="will-change-transform transition-transform transition-[filter]
-                          duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
-                          group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
-                          group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
-                        >
-                          <CardProjets
-                            record={record}
-                            imgUrl={imgUrl}
-                            align={i % 2 === 0 ? "left" : "right"}
-                          />
+                  {list.map(({ record, imgUrl }, i) => {
+                    // Détermine quel field de relation utiliser et le chemin correspondant
+                    let path = "/doss/";
+                    let pageId = record.page_autre;
+
+                    // Si page_photo existe et est rempli, utilise-le à la place
+                    if (record.page_photo) {
+                      path = "/photo/";
+                      pageId = record.page_photo;
+                    }
+
+                    return (
+                      <a
+                        href={`${path}${pageId}`}
+                        class="snap-center shrink-0 w-[468px] group block"
+                      >
+                        <div class="relative group-hover:z-20">
+                          <div
+                            class="will-change-transform transition-transform transition-[filter]
+                            duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
+                            group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
+                            group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+                          >
+                            <CardProjets
+                              record={record}
+                              imgUrl={imgUrl}
+                              align={i % 2 === 0 ? "left" : "right"}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </a>
-                  ))}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>

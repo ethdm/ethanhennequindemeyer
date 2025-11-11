@@ -3,8 +3,8 @@ import "../styles/global.css";
 import Header from "../components/header.astro";
 import fond1 from '../assets/fond1.webp';
 import Footer from '../components/footer.astro';
+import CustomCursor from '../components/CustomCursor.astro';
 ---
-
 
 <!doctype html>
 <html lang="en">
@@ -15,10 +15,12 @@ import Footer from '../components/footer.astro';
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
+  <CustomCursor />
   <body
     class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"
     style={`background-image: url('${fond1.src}');`}
   >
+    
     <Header />
 
 
@@ -27,3 +29,4 @@ import Footer from '../components/footer.astro';
     <Footer />
   </body>
 </html>
+
