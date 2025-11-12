@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import pb from '../../lib/pb';
 
+
 export async function getStaticPaths() {
   const records = await pb.collection('page_projet_classique').getFullList();
   
@@ -10,6 +11,7 @@ export async function getStaticPaths() {
     props: { record }
   }));
 }
+
 
 const { record } = Astro.props;
 const heroUrl = pb.files.getUrl(record, record.hero);
@@ -21,9 +23,17 @@ const ill4Url = pb.files.getUrl(record, record.ill4);
 const imagefUrl = pb.files.getUrl(record, record.imagef);
 const contenumultiUrl = record.contenumulti ? pb.files.getUrl(record, record.contenumulti) : null;
 const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
+
+// Fonction pour extraire l'ID YouTube de l'URL
+function getYouTubeID(url) {
+  if (!url) return null;
+  const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+}
+
+const youtubeID = getYouTubeID(record.youtube_url);
 ---
-
-
 
 
 <Layout title={record.title}>
@@ -35,7 +45,6 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
       class="w-full h-full object-cover"
     />
   </div>
-
 
 
   <div class="relative w-full h-screen">
@@ -55,7 +64,6 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
   </div>
 
 
-
   {/* txt1 à gauche + ill1 à droite */}
   {(record.txt1 && record.ill1) && (
     <div class="w-full flex items-center justify-between px-20 py-8 gap-8">
@@ -63,7 +71,6 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
       <img src={ill1Url} alt="Illustration 1" class="max-w-md h-auto" />
     </div>
   )}
-
 
 
   {/* ill2 à gauche + txt2 à droite */}
@@ -75,7 +82,6 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
   )}
 
 
-
   {/* txt3 à gauche + ill3 à droite */}
   {(record.txt3 && record.ill3) && (
     <div class="w-full flex items-center justify-between px-20 py-8 gap-8">
@@ -83,7 +89,6 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
       <img src={ill3Url} alt="Illustration 3" class="max-w-md h-auto" />
     </div>
   )}
-
 
 
   {/* ill4 à gauche + txt4 à droite */}
@@ -94,8 +99,23 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
     </div>
   )}
 
-  {/* Section média avec miniature */}
-  {(record.contenumulti && record.minia) && (
+
+  {/* Section vidéo YouTube OU média avec miniature */}
+  {youtubeID ? (
+    <div class="w-full flex flex-col items-center px-20 py-8">
+      <div class="max-w-4xl w-full aspect-video">
+        <iframe 
+          src={`https://www.youtube.com/embed/${youtubeID}`}
+          class="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      </div>
+      {record.txtmedia && (
+        <p class="text-white text-[20px] bg-black max-w-4xl mt-4 p-4 border-[5px] border-black w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
+      )}
+    </div>
+  ) : (record.contenumulti && record.minia) && (
     <div class="w-full flex flex-col items-center px-20 py-8">
       <div class="max-w-4xl w-full">
         <video 
@@ -113,6 +133,7 @@ const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
       )}
     </div>
   )}
+
 
   {/* Image finale pleine largeur */}
   <div class="w-full">
