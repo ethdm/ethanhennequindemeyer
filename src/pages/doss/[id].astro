@@ -2,18 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import pb from '../../lib/pb';
 
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const records = await pb.collection('page_projet_classique').getFullList();
-  
-  return records.map((record) => ({
-    params: { id: record.id },
-    props: { record }
-  }));
-}
+const id = Astro.params.id;
+const record = await pb.collection('page_projet_classique').getOne(id);
 
 
-const { record } = Astro.props;
+
 const heroUrl = pb.files.getUrl(record, record.hero);
 const fondUrl = pb.files.getUrl(record, record.fond);
 const ill1Url = pb.files.getUrl(record, record.ill1);
