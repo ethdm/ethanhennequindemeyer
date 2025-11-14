@@ -4,6 +4,7 @@ import PocketBase from "pocketbase";
 import CardItem from "../components/CardItem.astro";
 import fond1 from '../assets/fond1.webp';
 
+export const prerender = false;
 
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
