@@ -4,6 +4,7 @@ import PocketBase from "pocketbase";
 import CardProjets from "../../components/CardProjets.astro";
 import fond2 from "../../assets/fond2.webp";
 
+
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
   throw new Error(
@@ -12,20 +13,24 @@ if (!pbUrl) {
 }
 const pb = new PocketBase(pbUrl);
 
+
 const res = await pb.collection("card_p_projets").getList(1, 500, {
   sort: "created",
 });
+
 
 const items = res.items.map((r) => ({
   record: r,
   imgUrl: r.img ? pb.files.getUrl(r, r.img) : "",
 }));
 
+
 function normalizeCategories(val: unknown): string[] {
   if (Array.isArray(val)) return val.filter(Boolean);
   if (typeof val === "string" && val.trim() !== "") return [val];
   return [];
 }
+
 
 const mapByCat = new Map<string, { record: any; imgUrl: string }[]>();
 for (const it of items) {
@@ -40,11 +45,13 @@ for (const it of items) {
   }
 }
 
+
 const allCats = Array.from(mapByCat.keys()).sort((a, b) => {
   if (a === "Sans catégorie") return 1;
   if (b === "Sans catégorie") return -1;
   return a.localeCompare(b);
 });
+
 
 function slugifyCat(cat: string) {
   return cat
@@ -58,6 +65,7 @@ function slugifyCat(cat: string) {
     .replace(/(^-|-$)/g, "");
 }
 
+
 const slugCounts = new Map<string, number>();
 function uniqueSlug(cat: string) {
   const base = slugifyCat(cat || "sans-categorie");
@@ -66,12 +74,14 @@ function uniqueSlug(cat: string) {
   return n === 1 ? base : `${base}-${n}`;
 }
 
+
 const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
 ---
 
+
 <body style={`background-image: url('${fond2.src}'); overflow-x: hidden;`}>
   <Layout>
-    <!-- Styles scrollbar horizontale fine + masquage débordement -->
+    {/* Styles scrollbar horizontale fine + masquage débordement */}
     <style is:global>
       html,
       body {
@@ -79,11 +89,13 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
         max-width: 100vw;
       }
 
+
       /* Firefox */
       .carousel-scroll {
         scrollbar-width: thin;
         scrollbar-color: rgb(255, 255, 255) transparent;
       }
+
 
       /* Webkit (Chrome, Safari, Edge) */
       .carousel-scroll::-webkit-scrollbar {
@@ -103,10 +115,10 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
       .carousel-scroll::-webkit-scrollbar-thumb:hover {
         background: rgba(255, 255, 255, 0.6);
       }
-      /* Supprime les boutons/flèches */
     </style>
 
-    <!-- Barre d'ancres catégories -->
+
+    {/* Barre d'ancres catégories */}
     <section class="max-w-7xl mx-auto px-4 mt-34 mb-8">
       <div class="flex flex-wrap gap-3">
         <a
@@ -114,6 +126,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
           class="px-3 py-1 rounded-full border border-white !text-white hover:bg-white/20 transition"
           style="font-family:'Cal Sans'">Toutes</a
         >
+
 
         {
           allCats.map((cat) => (
@@ -129,115 +142,134 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
       </div>
     </section>
 
-    <!-- Section carousels -->
+
+    {/* Section carousels */}
     <section id="all" class="mx-auto max-w-full overflow-hidden space-y-14">
-      {
-        allCats.map((cat, catIndex) => {
-          const list = mapByCat.get(cat) ?? [];
-          const id = catToSlug[cat];
-          return (
-            <div id={id} class="scroll-mt-28">
-              <h2
-                class="mb-4 pl-9 text-white"
-                style="font-family: 'Climate Crisis', system-ui, sans-serif; font-size: 28px; letter-spacing: .5px;"
+      {allCats.map((cat, catIndex) => {
+        const list = mapByCat.get(cat) ?? [];
+        const id = catToSlug[cat];
+        return (
+          <div id={id} class="scroll-mt-28">
+            <h2
+              class="mb-4 pl-9 text-white"
+              style="font-family: 'Climate Crisis', system-ui, sans-serif; font-size: 28px; letter-spacing: .5px;"
+            >
+              {cat}
+            </h2>
+
+
+            <div class="relative mb-8">
+              <div
+                class="carousel-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-[246px] pb-4 pt-10"
+                style="scroll-padding-inline: 246px;"
               >
-                {cat}
-              </h2>
-
-              <div class="relative mb-8">
-                <div
-                  class="carousel-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth
-                   px-[246px] pb-4 pt-10 mb-3"
-                  style="scroll-padding-inline: 246px;"
-                >
-                  {/* Carte statique THÉA - seulement dans la première catégorie */}
-                  {catIndex === 0 && (
-                    <div class="snap-center shrink-0 w-[468px] group">
-                      <a href="/thea" class="block relative group-hover:z-20">
-                        <div
-                          class="will-change-transform transition-transform transition-[filter]
-                           duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
-                           group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
-                           group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
-                        >
-                          <div class="flex sm:flex-row items-start gap-6">
-                            <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
-                              <div class="p-3">
-                                <div class="relative">
-                                  <div class="aspect-[468/328] w-full overflow-hidden">
-                                    <img
-                                      src="/src/assets/card/thea.webp"
-                                      alt="THÉA"
-                                      class="w-full h-full object-cover"
-                                      loading="lazy"
-                                    />
-                                  </div>
-
-                                  <div class="absolute top-3 right-4 ml-2">
-                                    <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">
-                                      Collection / Galerie Photo
-                                    </span>
-                                  </div>
-                                  <div class="absolute bottom-3 left-4">
-                                    <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">
-                                      08/2025
-                                    </span>
-                                  </div>
+                {/* Carte statique THÉA - seulement dans la première catégorie */}
+                {catIndex === 0 && (
+                  <div class="snap-center shrink-0 w-[468px] group">
+                    <a href="/thea" class="block relative group-hover:z-20">
+                      <div
+                        class="will-change-transform transition-transform transition-[filter] duration-150 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)] group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+                      >
+                        <div class="flex sm:flex-row items-start gap-6">
+                          <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
+                            <div class="p-3">
+                              <div class="relative">
+                                <div class="aspect-[468/328] w-full overflow-hidden">
+                                  <img
+                                    src="/src/assets/card/thea.webp"
+                                    alt="THÉA"
+                                    class="w-full h-full object-cover"
+                                    loading="lazy"
+                                  />
                                 </div>
-
-                                <div class="w-full mt-3 sm:text-right">
-                                  <h3 class="font-[ClimateCrisis] text-[38px] sm:text-[34px] leading-none mt-1">
-                                    THÉA
-                                  </h3>
+                                <div class="absolute top-3 right-4 ml-2">
+                                  <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">
+                                    Collection / Galerie Photo
+                                  </span>
+                                </div>
+                                <div class="absolute bottom-3 left-4">
+                                  <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">
+                                    08/2025
+                                  </span>
                                 </div>
                               </div>
+
+
+                              <div class="w-full mt-3 sm:text-right">
+                                <h3 class="font-[ClimateCrisis] text-[38px] sm:text-[34px] leading-none mt-1">
+                                  THÉA
+                                </h3>
+                                 </div>
                             </div>
                           </div>
                         </div>
-                      </a>
-                    </div>
-                  )}
+                      </div>
+                    </a>
+                  </div>
+                )}
 
-                  {/* Cartes dynamiques */}
-                  {list.map(({ record, imgUrl }, i) => {
-                    // Détermine quel field de relation utiliser et le chemin correspondant
-                    let path = "/doss/";
-                    let pageId = record.page_autre;
 
-                    // Si page_photo existe et est rempli, utilise-le à la place
-                    if (record.page_photo) {
-                      path = "/photo/";
-                      pageId = record.page_photo;
-                    }
+                {/* Cartes dynamiques */}
+                {list.map(({ record, imgUrl }, i) => {
+                  let path = "/doss/";
+                  let pageId = record.page_autre;
 
-                    return (
-                      <a
-                        href={`${path}${pageId}`}
-                        class="snap-center shrink-0 w-[468px] group block"
-                      >
-                        <div class="relative group-hover:z-20">
-                          <div
-                            class="will-change-transform transition-transform transition-[filter]
-                            duration-150 ease-[cubic-bezier(.2,.8,.2,1)]
-                            group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)]
-                            group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
-                          >
-                            <CardProjets
-                              record={record}
-                              imgUrl={imgUrl}
-                              align={i % 2 === 0 ? "left" : "right"}
-                            />
-                          </div>
+
+                  if (record.page_photo) {
+                    path = "/photo/";
+                    pageId = record.page_photo;
+                  }
+
+
+                  return (
+                    <a
+                      href={`${path}${pageId}`}
+                      class="snap-center shrink-0 w-[468px] group block"
+                    >
+                      <div class="relative group-hover:z-20">
+                        <div
+                          class="will-change-transform transition-transform transition-[filter] duration-150 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)] group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
+                        >
+                          <CardProjets
+                            record={record}
+                            imgUrl={imgUrl}
+                            align={i % 2 === 0 ? "left" : "right"}
+                          />
                         </div>
-                      </a>
-                    );
-                  })}
-                </div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+
+              {/* -- NOUVEAU : Wrapper pour les flèches -- */}
+              <div class="mt-6 flex items-center justify-center gap-x-4">
+                {/* Flèche gauche */}
+                <button
+                  class="carousel-btn left flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white/90 backdrop-blur-sm transition-colors hover:bg-white/30 hover:text-white"
+                  aria-label="Précédent"
+                  onclick="const root = this.closest('.relative'); const scroller = root?.querySelector('.carousel-scroll'); if (scroller) scroller.scrollBy({ left: -492, behavior: 'smooth' });"
+                >
+                  <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <path d="M30 10 L18 24 L30 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+
+                {/* Flèche droite */}
+                <button
+                  class="carousel-btn right flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white/90 backdrop-blur-sm transition-colors hover:bg-white/30 hover:text-white"
+                  aria-label="Suivant"
+                  onclick="const root = this.closest('.relative'); const scroller = root?.querySelector('.carousel-scroll'); if (scroller) scroller.scrollBy({ left: 492, behavior: 'smooth' });"
+                >
+                  <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <path d="M18 10 L30 24 L18 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
               </div>
             </div>
-          );
-        })
-      }
+          </div>
+        );
+      })}
     </section>
 
     <style>
@@ -253,63 +285,9 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
           1px 1px 0 rgba(0, 0, 0, 0.6);
       }
     </style>
-
-    <!-- Flèche gauche -->
-    <button
-      class="carousel-btn left absolute left-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
-                   h-14 w-14 text-white/90 hover:text-white transition-colors z-[9999] pointer-events-auto"
-      aria-label="Précédent"
-      onclick="
-              const root = this.closest('.relative');
-              const scroller = root?.querySelector('.carousel-scroll');
-              if (scroller) scroller.scrollBy({ left: -492, behavior: 'smooth' });
-            "
-    >
-      <svg
-        width="36"
-        height="36"
-        viewBox="0 0 48 48"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M30 10 L18 24 L30 38"
-          stroke="currentColor"
-          stroke-width="6"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-    </button>
-
-    <!-- Flèche droite -->
-    <button
-      class="carousel-btn right absolute right-0 top-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center
-                   h-14 w-14 text-white/90 hover:text-white transition-colors z-[9999] pointer-events-auto"
-      aria-label="Suivant"
-      onclick="
-              const root = this.closest('.relative');
-              const scroller = root?.querySelector('.carousel-scroll');
-              if (scroller) scroller.scrollBy({ left: 492, behavior: 'smooth' });
-            "
-    >
-      <svg
-        width="36"
-        height="36"
-        viewBox="0 0 48 48"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M18 10 L30 24 L18 38"
-          stroke="currentColor"
-          stroke-width="6"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-    </button>
   </Layout>
 </body>
-); })}
+
 
 <!-- Script ancres smooth + surbrillance active -->
 <script type="module">
@@ -325,6 +303,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
     });
   });
 
+
   // Surbrillance de la puce active au scroll
   const chips = new Map();
   document.querySelectorAll('a[href^="#"]').forEach((chip) => {
@@ -332,6 +311,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
     const id = href.startsWith("#") ? href.slice(1) : "";
     if (id && id !== "all") chips.set(id, chip);
   });
+
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -348,10 +328,12 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
     { rootMargin: "-20% 0px -60% 0px", threshold: [0.2, 0.5, 0.8] },
   );
 
+
   document.querySelectorAll("[id]").forEach((sec) => {
     if (chips.has(sec.id)) observer.observe(sec);
   });
 </script>
+
 
 <!-- Script centrage initial des carousels -->
 <script type="module">

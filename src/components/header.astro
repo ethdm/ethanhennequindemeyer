@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import logo from '../assets/logo.webp';
 ---
 
-<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-6 bg-[#692AAD80]/85 backdrop-blur-md pointer-events-none">
+<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-4 bg-[#692AAD80]/85 backdrop-blur-md pointer-events-none">
   <a href="/" class="flex items-center pointer-events-auto">
     <Image src={logo} alt="Logo" class="h-16 w-16" />
   </a>
@@ -24,8 +24,8 @@ import logo from '../assets/logo.webp';
 
   <nav class="hidden md:flex gap-12 text-[28px] font-normal pointer-events-auto" style="font-family: 'Climate Crisis', sans-serif;">
     <a href="/doss/projets" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">Projets</a>
-    <a href="#apropos" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">À propos</a>
-    <a href="#contact" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">Contact</a>
+    <a href="/apropos" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">À propos</a>
+    <a href="/apropos#idencre-contact" class="text-white hover:opacity-90 hover:-translate-y-0.5 transition">Contact</a>
   </nav>
 
   <nav 

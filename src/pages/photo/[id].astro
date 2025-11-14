@@ -87,7 +87,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                   <img 
                     src={photoUrl} 
                     alt="Photo de galerie"
-                    class="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                    class="w-full h-64 object-cover hover:scale-105 hover:-rotate-5 hover:border-3 hover:border-white transition-transform duration-300"
                   />
                 </div>
               );
@@ -157,7 +157,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                       {record.seriecoll2.map((seriePhoto) => {
                         const serieUrl = pb.files.getUrl(record, seriePhoto);
                         return (
-                          <div class="cursor-pointer gallery-item">
+                          <div class="cursor-pointer gallery-item hover:-rotate-30" >
                             <img 
                               src={serieUrl} 
                               alt="Photo de série 2"
@@ -179,7 +179,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
 
 
   {/* Lightbox */}
-  <div id="lightbox" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
+  <div id="lightbox" class="hidden cursor-default fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
     <span id="close-btn" class="absolute top-8 right-8 text-white text-4xl cursor-pointer hover:text-gray-300">&times;</span>
     
     {/* Flèche gauche */}

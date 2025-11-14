@@ -96,7 +96,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
     <!-- Flèche vers Qq proj -->
     <button
       onclick="document.getElementById('qq-proj-section').scrollIntoView({ behavior: 'smooth' })"
-      class="absolute bottom-4 sm:bottom-8 animate-bounce cursor-pointer hover:opacity-80 transition-opacity"
+      class="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer hover:opacity-80 hover:scale-110 transition-all bg-black/10 backdrop-blur-sm rounded-full p-2 mb-3"
       aria-label="Descendre vers les projets"
     >
       <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="sm:w-12 sm:h-12">
@@ -104,6 +104,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
       </svg>
     </button>
   </div>
+
 
 
   <!-- Defilement -->
@@ -125,7 +126,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
     <div class="max-w-6xl mx-auto">
       <div class="ml-2 sm:ml-4 mb-8">
         <h1
-          style="font-family: 'Climate Crisis'; -webkit-text-stroke: 2px #CAFB23; paint-order: stroke fill;"
+          style="font-family: 'Climate Crisis'; -webkit-text-stroke: 2px #FF00C8; paint-order: stroke fill;"
           class="text-[24px] sm:text-[28px] md:text-[32px] text-black"
         >
           Mes domaines
@@ -143,7 +144,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
                   {(category.traits ?? []).map((trait, traitIndex) => (
                     <li key={traitIndex} class="flex items-start gap-2 md:gap-3">
                       <span class="text-black text-lg md:text-2xl mt-0 flex-shrink-0">•</span>
-                      <span style="font-family: 'Cal Sans'" class="text-black text-[14px] sm:text-[18px] md:text-[24px] leading-tight">{trait}</span>
+                      <span style="font-family: 'Cal Sans'" class="text-black text-[14px] sm:text-[18px] md:text-[18px] leading-tight">{trait}</span>
                     </li>
                   ))}
                 </ul>
@@ -153,10 +154,10 @@ const filteredItems = urlCat && urlCat !== "ALL"
 
               <div class="flex-grow group/title">
                 <h2
-                  style="font-family: 'Climate Crisis'; -webkit-text-stroke: 2px #CAFB23; paint-order: stroke fill; color: black;"
+                  style="font-family: 'Climate Crisis'; -webkit-text-stroke: 2px #7B00FF; paint-order: stroke fill; color: black;"
                   class="text-[28px] sm:text-[36px] md:text-[48px] transition-all duration-300 hover:bg-transparent"
-                  onmouseover="this.style.color='#CAFB23'; this.style.WebkitTextStroke='1px black';"
-                  onmouseout="this.style.color='black'; this.style.WebkitTextStroke='2px #CAFB23';"
+                  onmouseover="this.style.color='#7B00FF'; this.style.WebkitTextStroke='1px black';"
+                  onmouseout="this.style.color='black'; this.style.WebkitTextStroke='2px #7B00FF';"
                 >
                   {category.name}
                 </h2>
@@ -166,7 +167,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
 
               {index === 0 && (
                 <div class="w-full md:w-80 md:flex-shrink-0">
-                  <p style="font-family: 'Cal Sans'" class="text-[14px] sm:text-[18px] md:text-[24px] text-black leading-tight">
+                  <p style="font-family: 'Cal Sans'" class="text-[14px] sm:text-[18px] md:text-[18px] text-black leading-tight">
                     Je suis polyvalent, c'est l'essence même de mon univers créatif.
                     <br /><br />
                     Œuvrer sur de différents supports avec des idées variés et toujours originale.
