@@ -2,16 +2,27 @@
 import Layout from '../../layouts/Layout.astro';
 import pb from '../../lib/pb';
 
+// Active le mode SSR pour cette page
 export const prerender = false;
 
-const id = Astro.params.id;
-const record = await pb.collection('page_projet_classique').getOne(id);
+// Récupération du record depuis l'URL
+const { id } = Astro.params;
+
+let record = null;
+try {
+  record = await pb.collection('page_projet_photo').getOne(id);
+} catch (error) {
+  console.error('Erreur lors de la récupération du projet:', error);
+  return Astro.redirect('/404');
+}
+
+if (!record) {
+  return Astro.redirect('/404');
+}
 
 const heroUrl = pb.files.getUrl(record, record.hero);
 const fondUrl = pb.files.getUrl(record, record.fond);
 const imagefUrl = pb.files.getUrl(record, record.imagef);
-
-
 
 // Groupe les photos par blocs de 6 (3x2)
 const photoGroups = [];
@@ -21,8 +32,6 @@ if (record.photos && record.photos.length > 0) {
   }
 }
 
-
-
 // URLs pour la section collection 1
 const fondcoll1Url = record.fondcoll1 ? pb.files.getUrl(record, record.fondcoll1) : null;
 const hasColl1 = record.fondcoll1 && record.titlecoll1 && record.desccoll1 && record.seriecoll1;
@@ -30,21 +39,16 @@ const hasColl1 = record.fondcoll1 && record.titlecoll1 && record.desccoll1 && re
 // URLs pour la section collection 2
 const fondcoll2Url = record.fondcoll2 ? pb.files.getUrl(record, record.fondcoll2) : null;
 const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && record.seriecoll2;
-
-
-
 ---
+
 <Layout title={record.title}>
-
-
-    <div class="fixed top-0 left-0 w-full h-screen -z-10">
+  <div class="fixed top-0 left-0 w-full h-screen -z-10">
     <img 
       src={fondUrl} 
       alt="Background"
       class="w-full h-full object-cover"
     />
   </div>
-
 
   <div class="relative w-full h-screen">
     {/* Image hero en pleine largeur */}
@@ -61,7 +65,6 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
       <p class="text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
     </div>
   </div>
-
 
   {/* Galerie de photos */}
   {photoGroups.length > 0 && (
@@ -83,7 +86,6 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
             })}
           </div>
 
-
           {/* Section collection 1 après 2 parties (index 1) */}
           {groupIndex === 1 && hasColl1 && (
             <div class="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
@@ -98,7 +100,6 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                   <h3 class="text-[32px] mb-4" style="font-family: 'Climate Crisis', sans-serif;">{record.titlecoll1}</h3>
                   <p class="text-[16px] whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif;">{record.desccoll1}</p>
                 </div>
-
 
                 {/* Série d'images en lignes de 3 - superposée sur le fond */}
                 {record.seriecoll1 && record.seriecoll1.length > 0 && (
@@ -138,7 +139,6 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                   <p class="text-[16px] whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif;">{record.desccoll2}</p>
                 </div>
 
-
                 {/* Série d'images en lignes de 3 - superposée sur le fond */}
                 {record.seriecoll2 && record.seriecoll2.length > 0 && (
                   <div class="absolute bottom-30 left-1/2 -translate-x-1/2 translate-y-1/2 w-full px-20">
@@ -146,7 +146,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                       {record.seriecoll2.map((seriePhoto) => {
                         const serieUrl = pb.files.getUrl(record, seriePhoto);
                         return (
-                          <div class="cursor-pointer gallery-item hover:-rotate-30" >
+                          <div class="cursor-pointer gallery-item hover:-rotate-30">
                             <img 
                               src={serieUrl} 
                               alt="Photo de série 2"
@@ -166,7 +166,6 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
     </div>
   )}
 
-
   {/* Lightbox */}
   <div id="lightbox" class="hidden cursor-default fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
     <span id="close-btn" class="absolute top-8 right-8 text-white text-4xl cursor-pointer hover:text-gray-300">&times;</span>
@@ -183,7 +182,6 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
       &#8250;
     </button>
   </div>
-
 
   <script>
     const lightbox = document.getElementById('lightbox');

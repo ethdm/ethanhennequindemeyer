@@ -1,6 +1,6 @@
 import { c as createComponent, e as createAstro, r as renderComponent, b as renderTemplate, m as maybeRenderHead, d as addAttribute, a as renderScript, F as Fragment } from '../../chunks/astro/server_TzH25wzC.mjs';
-import { $ as $$Layout } from '../../chunks/Layout_CFZmdzoR.mjs';
-import { p as pb } from '../../chunks/pb_DFRBviiV.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_Ct1r6xTS.mjs';
+import { p as pb } from '../../chunks/pb_CwsyNcw4.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();
@@ -8,8 +8,17 @@ const prerender = false;
 const $$id = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$id;
-  const id = Astro2.params.id;
-  const record = await pb.collection("page_projet_classique").getOne(id);
+  const { id } = Astro2.params;
+  let record = null;
+  try {
+    record = await pb.collection("page_projet_photo").getOne(id);
+  } catch (error) {
+    console.error("Erreur lors de la r\xE9cup\xE9ration du projet:", error);
+    return Astro2.redirect("/404");
+  }
+  if (!record) {
+    return Astro2.redirect("/404");
+  }
   const heroUrl = pb.files.getUrl(record, record.hero);
   const fondUrl = pb.files.getUrl(record, record.fond);
   const imagefUrl = pb.files.getUrl(record, record.imagef);

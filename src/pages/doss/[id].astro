@@ -7,8 +7,6 @@ export const prerender = false;
 const id = Astro.params.id;
 const record = await pb.collection('page_projet_classique').getOne(id);
 
-
-
 const heroUrl = pb.files.getUrl(record, record.hero);
 const fondUrl = pb.files.getUrl(record, record.fond);
 const ill1Url = pb.files.getUrl(record, record.ill1);
@@ -30,7 +28,6 @@ function getYouTubeID(url) {
 const youtubeID = getYouTubeID(record.youtube_url);
 ---
 
-
 <Layout title={record.title}>
   {/* Image de fond sticky derrière tout */}
   <div class="fixed top-0 left-0 w-full h-screen -z-10">
@@ -41,7 +38,6 @@ const youtubeID = getYouTubeID(record.youtube_url);
     />
   </div>
 
-
   <div class="relative w-full h-screen">
     {/* Image hero en pleine largeur */}
     <img 
@@ -51,53 +47,48 @@ const youtubeID = getYouTubeID(record.youtube_url);
     />
     
     {/* Texte en bas à gauche */}
-    <div class="absolute bottom-5 left-5 p-8 text-white">
-      <h1 class="text-[60px]" style="font-family: 'Climate Crisis', sans-serif;">{record.title}</h1>
-      <h2 class="text-[32px] max-w-2xl" style="font-family: 'Climate Crisis', sans-serif;">{record.subtitle}</h2>
-      <p class="text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
+    <div class="absolute bottom-5 left-5 p-4 md:p-8 text-white">
+      <h1 class="text-[32px] md:text-[60px]" style="font-family: 'Climate Crisis', sans-serif;">{record.title}</h1>
+      <h2 class="text-[18px] md:text-[32px] max-w-2xl" style="font-family: 'Climate Crisis', sans-serif;">{record.subtitle}</h2>
+      <p class="text-[14px] md:text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
     </div>
   </div>
 
-
   {/* txt1 à gauche + ill1 à droite */}
   {(record.txt1 && record.ill1) && (
-    <div class="w-full flex items-center justify-between px-20 py-8 gap-8">
-      <p class="text-white text-[16px] bg-black max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt1}</p>
-      <img src={ill1Url} alt="Illustration 1" class="max-w-md h-auto" />
+    <div class="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt1}</p>
+      <img src={ill1Url} alt="Illustration 1" class="w-full md:max-w-md h-auto" />
     </div>
   )}
-
 
   {/* ill2 à gauche + txt2 à droite */}
   {(record.ill2 && record.txt2) && (
-    <div class="w-full flex items-center justify-between px-20 py-8 gap-8">
-      <img src={ill2Url} alt="Illustration 2" class="max-w-md h-auto" />
-      <p class="text-white text-[16px] bg-black max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt2}</p>
+    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <img src={ill2Url} alt="Illustration 2" class="w-full md:max-w-md h-auto" />
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt2}</p>
     </div>
   )}
-
 
   {/* txt3 à gauche + ill3 à droite */}
   {(record.txt3 && record.ill3) && (
-    <div class="w-full flex items-center justify-between px-20 py-8 gap-8">
-      <p class="text-white text-[16px] bg-black max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt3}</p>
-      <img src={ill3Url} alt="Illustration 3" class="max-w-md h-auto" />
+    <div class="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt3}</p>
+      <img src={ill3Url} alt="Illustration 3" class="w-full md:max-w-md h-auto" />
     </div>
   )}
-
 
   {/* ill4 à gauche + txt4 à droite */}
   {(record.ill4 && record.txt4) && (
-    <div class="w-full flex items-center justify-between px-20 py-8 gap-8">
-      <img src={ill4Url} alt="Illustration 4" class="max-w-md h-auto" />
-      <p class="text-white text-[16px] bg-black max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt4}</p>
+    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <img src={ill4Url} alt="Illustration 4" class="w-full md:max-w-md h-auto" />
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt4}</p>
     </div>
   )}
 
-
   {/* Section vidéo YouTube OU média avec miniature */}
   {youtubeID ? (
-    <div class="w-full flex flex-col items-center px-20 py-8">
+    <div class="w-full flex flex-col items-center px-5 md:px-20 py-8">
       <div class="max-w-4xl w-full aspect-video">
         <iframe 
           src={`https://www.youtube.com/embed/${youtubeID}`}
@@ -107,11 +98,11 @@ const youtubeID = getYouTubeID(record.youtube_url);
         />
       </div>
       {record.txtmedia && (
-        <p class="text-black text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
+        <p class="text-black text-[14px] md:text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
       )}
     </div>
   ) : (record.contenumulti && record.minia) && (
-    <div class="w-full flex flex-col items-center px-20 py-8">
+    <div class="w-full flex flex-col items-center px-5 md:px-20 py-8">
       <div class="max-w-4xl w-full">
         <video 
           controls 
@@ -124,11 +115,10 @@ const youtubeID = getYouTubeID(record.youtube_url);
         </video>
       </div>
       {record.txtmedia && (
-        <p class="text-black text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
+        <p class="text-black text-[14px] md:text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
       )}
     </div>
   )}
-
 
   {/* Image finale pleine largeur */}
   <div class="w-full">
