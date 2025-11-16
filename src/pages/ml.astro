@@ -1,0 +1,89 @@
+---
+// src/pages/mentions-legales.astro
+import Layout from '../layouts/Layout.astro';
+---
+
+
+
+<body class="bg-neutral-950 text-white min-h-screen font-['Cal_Sans']">
+<Layout>
+    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 mt-18 ">
+        <h1 class="text-4xl md:text-5xl mb-12 bg-[#0D0D0D] p-6">Mentions Légales</h1>
+        
+        <div class="space-y-10 bg-[#0D0D0D] p-6">
+            <!-- Éditeur du site -->
+            <section class="">
+                <h2 class="text-2xl mb-4">Éditeur du site</h2>
+                <div class="space-y-2 text-neutral-300">
+                    <p><span class="text-white font-medium">Nom :</span> Ethan Hennequin De Meyer</p>
+                    <p><span class="text-white font-medium">Email :</span> contact@ethan-hennequindemeyer.fr</p>
+                </div>
+            </section>
+
+            <!-- Hébergement -->
+            <section class="">
+                <h2 class="text-2xl mb-4">Hébergement</h2>
+                <div class="space-y-2 text-neutral-300">
+                    <p><span class="text-white font-medium">Hébergeur :</span> Netlify, VPS créer par le Dr. Mabed </p>
+                    <p><span class="text-white font-medium">Site web :</span> <a href="https://portfolio.ethan-hennequindemeyer.fr/" target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition-colors">https://portfolio.ethan-hennequindemeyer.fr/</a></p>
+                </div>
+            </section>
+
+            <!-- Propriété intellectuelle -->
+            <section class="">
+                <h2 class="text-2xl mb-4">Propriété Intellectuelle</h2>
+                <p class="text-neutral-300 leading-relaxed">
+                    L'ensemble des contenus présents sur ce site (textes, photographies, créations graphiques, vidéos) sont la propriété exclusive de Ethan Hennequin De Meyer. 
+                    Toute reproduction, distribution, modification, adaptation, retransmission ou publication de ces différents éléments est strictement interdite sans l'accord exprès écrit de Ethan Hennequin De Meyer.
+                </p>
+                <p class="text-neutral-300 leading-relaxed mt-4">
+                    Pour toute demande d'autorisation ou d'information, veuillez me contacter par email à l'adresse indiquée ci-dessus.
+                </p>
+            </section>
+
+            <!-- Protection des données personnelles -->
+            <section class="">
+                <h2 class="text-2xl mb-4">Protection des Données Personnelles</h2>
+                <p class="text-neutral-300 leading-relaxed mb-4">
+                    Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition aux données personnelles vous concernant.
+                </p>
+                <p class="text-neutral-300 leading-relaxed">
+                    Ce site ne collecte aucune donnée personnelle sans votre consentement. Si vous utilisez le formulaire de contact, les informations transmises (nom, email, message) sont uniquement utilisées pour répondre à votre demande et ne sont ni conservées ni transmises à des tiers.
+                </p>
+                <p class="text-neutral-300 leading-relaxed mt-4">
+                    Pour exercer vos droits, vous pouvez me contacter à l'adresse email indiquée ci-dessus.
+                </p>
+            </section>
+
+            <!-- Cookies -->
+            <section class="">
+                <h2 class="text-2xl mb-4">Cookies</h2>
+                <p class="text-neutral-300 leading-relaxed">
+                    Ce site n'utilise pas de cookies de suivi ou de cookies publicitaires. Seuls des cookies techniques nécessaires au bon fonctionnement du site peuvent être utilisés.
+                </p>
+            </section>
+
+            <!-- Crédits -->
+            <section class="">
+                <h2 class="text-2xl mb-4">Crédits</h2>
+                <div class="space-y-2 text-neutral-300">
+                    <p><span class="text-white font-medium">Conception et développement :</span>  Ethan Hennequin De Meyer - @splmo_7410 </p>
+                    <p><span class="text-white font-medium">Photographies :</span> Ethan Hennequin De Meyer - @splmo_7410 - Tous droits réservés</p>
+                    <p><span class="text-white font-medium">Technologies :</span> Astro, Tailwind CSS</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Retour -->
+        <div class="mt-16 pt-8 border-t border-neutral-800">
+            <a href="/" class="inline-flex items-center text-neutral-300 hover:text-white transition-colors">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Retour à l'accueil
+            </a>
+        </div>
+    </main>
+</body>
+
+</Layout>

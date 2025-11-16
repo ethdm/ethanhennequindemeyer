@@ -58,20 +58,20 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
       class="w-full h-full object-cover"
     />
     
-    {/* Texte en bas à gauche */}
-    <div class="absolute bottom-5 left-5 p-8 text-white">
-      <h1 class="text-[60px]" style="font-family: 'Climate Crisis', sans-serif;">{record.title}</h1>
-      <h2 class="text-[32px] max-w-2xl" style="font-family: 'Climate Crisis', sans-serif;">{record.subtitle}</h2>
-      <p class="text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
+    {/* Texte en bas à gauche - responsive */}
+    <div class="absolute bottom-3 left-3 md:bottom-5 md:left-5 p-4 md:p-8 text-white">
+      <h1 class="text-3xl md:text-5xl lg:text-[60px]" style="font-family: 'Climate Crisis', sans-serif;">{record.title}</h1>
+      <h2 class="text-xl md:text-2xl lg:text-[32px] max-w-2xl" style="font-family: 'Climate Crisis', sans-serif;">{record.subtitle}</h2>
+      <p class="text-sm md:text-base lg:text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
     </div>
   </div>
 
-  {/* Galerie de photos */}
+  {/* Galerie de photos - responsive */}
   {photoGroups.length > 0 && (
-    <div class="w-full px-20 py-16 space-y-20">
+    <div class="w-full px-4 md:px-10 lg:px-20 py-8 md:py-12 lg:py-16 space-y-10 md:space-y-16 lg:space-y-20">
       {photoGroups.map((group, groupIndex) => (
         <>
-          <div class="grid grid-cols-3 auto-rows-max gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-3 md:gap-4">
             {group.map((photo) => {
               const photoUrl = pb.files.getUrl(record, photo);
               return (
@@ -79,14 +79,14 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                   <img 
                     src={photoUrl} 
                     alt="Photo de galerie"
-                    class="w-full h-64 object-cover hover:scale-105 hover:-rotate-5 hover:border-3 hover:border-white transition-transform duration-300"
+                    class="w-full h-48 md:h-56 lg:h-64 object-cover hover:scale-105 hover:-rotate-5 hover:border-3 hover:border-white transition-transform duration-300"
                   />
                 </div>
               );
             })}
           </div>
 
-          {/* Section collection 1 après 2 parties (index 1) */}
+          {/* Section collection 1 après 2 parties (index 1) - responsive */}
           {groupIndex === 1 && hasColl1 && (
             <div class="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
               {/* Fond avec texte */}
@@ -94,17 +94,17 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                 <img 
                   src={fondcoll1Url} 
                   alt="Fond collection"
-                  class="w-full h-auto object-cover -z-10 mb-40"
+                  class="w-full h-auto object-cover -z-10 mb-20 md:mb-32 lg:mb-40"
                 />
-                <div class="absolute top-10 left-10 text-white max-w-xl">
-                  <h3 class="text-[32px] mb-4" style="font-family: 'Climate Crisis', sans-serif;">{record.titlecoll1}</h3>
-                  <p class="text-[16px] whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif;">{record.desccoll1}</p>
+                <div class="absolute top-4 left-4 md:top-8 md:left-8 lg:top-10 lg:left-10 text-white max-w-xs md:max-w-lg lg:max-w-xl">
+                  <h3 class="text-xl md:text-2xl lg:text-[32px] mb-2 md:mb-3 lg:mb-4" style="font-family: 'Climate Crisis', sans-serif;">{record.titlecoll1}</h3>
+                  <p class="text-sm md:text-base lg:text-[16px] whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif;">{record.desccoll1}</p>
                 </div>
 
-                {/* Série d'images en lignes de 3 - superposée sur le fond */}
+                {/* Série d'images en lignes de 3 - superposée sur le fond - responsive */}
                 {record.seriecoll1 && record.seriecoll1.length > 0 && (
-                  <div class="absolute bottom-30 left-1/2 -translate-x-1/2 translate-y-1/2 w-full px-20">
-                    <div class="grid grid-cols-3 gap-4 mb-20">
+                  <div class="absolute bottom-10 md:bottom-20 lg:bottom-30 left-1/2 -translate-x-1/2 translate-y-1/2 w-full px-4 md:px-10 lg:px-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-10 md:mb-16 lg:mb-20">
                       {record.seriecoll1.map((seriePhoto) => {
                         const serieUrl = pb.files.getUrl(record, seriePhoto);
                         return (
@@ -112,7 +112,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                             <img 
                               src={serieUrl} 
                               alt="Photo de série"
-                              class="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                              class="w-full h-48 md:h-56 lg:h-64 object-cover hover:scale-105 transition-transform duration-300"
                             />
                           </div>
                         );
@@ -124,7 +124,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
             </div>
           )}
 
-          {/* Section collection 2 après 4 parties (index 3) */}
+          {/* Section collection 2 après 4 parties (index 3) - responsive */}
           {groupIndex === 3 && hasColl2 && (
             <div class="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
               {/* Fond avec texte */}
@@ -132,17 +132,17 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                 <img 
                   src={fondcoll2Url} 
                   alt="Fond collection 2"
-                  class="w-full h-auto object-cover -z-10 mb-40"
+                  class="w-full h-auto object-cover -z-10 mb-20 md:mb-32 lg:mb-40"
                 />
-                <div class="absolute top-10 left-10 text-white max-w-xl">
-                  <h3 class="text-[32px] mb-4" style="font-family: 'Climate Crisis', sans-serif;">{record.titlecoll2}</h3>
-                  <p class="text-[16px] whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif;">{record.desccoll2}</p>
+                <div class="absolute top-4 left-4 md:top-8 md:left-8 lg:top-10 lg:left-10 text-white max-w-xs md:max-w-lg lg:max-w-xl">
+                  <h3 class="text-xl md:text-2xl lg:text-[32px] mb-2 md:mb-3 lg:mb-4" style="font-family: 'Climate Crisis', sans-serif;">{record.titlecoll2}</h3>
+                  <p class="text-sm md:text-base lg:text-[16px] whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif;">{record.desccoll2}</p>
                 </div>
 
-                {/* Série d'images en lignes de 3 - superposée sur le fond */}
+                {/* Série d'images en lignes de 3 - superposée sur le fond - responsive */}
                 {record.seriecoll2 && record.seriecoll2.length > 0 && (
-                  <div class="absolute bottom-30 left-1/2 -translate-x-1/2 translate-y-1/2 w-full px-20">
-                    <div class="grid grid-cols-3 gap-4 mb-20">
+                  <div class="absolute bottom-10 md:bottom-20 lg:bottom-30 left-1/2 -translate-x-1/2 translate-y-1/2 w-full px-4 md:px-10 lg:px-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-10 md:mb-16 lg:mb-20">
                       {record.seriecoll2.map((seriePhoto) => {
                         const serieUrl = pb.files.getUrl(record, seriePhoto);
                         return (
@@ -150,7 +150,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                             <img 
                               src={serieUrl} 
                               alt="Photo de série 2"
-                              class="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                              class="w-full h-48 md:h-56 lg:h-64 object-cover hover:scale-105 transition-transform duration-300"
                             />
                           </div>
                         );
@@ -166,19 +166,19 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
     </div>
   )}
 
-  {/* Lightbox */}
-  <div id="lightbox" class="hidden cursor-default fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center">
-    <span id="close-btn" class="absolute top-8 right-8 text-white text-4xl cursor-pointer hover:text-gray-300">&times;</span>
+  {/* Lightbox - responsive */}
+  <div id="lightbox" class="hidden cursor-default fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+    <span id="close-btn" class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-3xl md:text-4xl cursor-pointer hover:text-gray-300">&times;</span>
     
-    {/* Flèche gauche */}
-    <button id="prev-btn" class="absolute left-8 text-white text-5xl cursor-pointer hover:text-gray-300 p-4">
+    {/* Flèche gauche - responsive */}
+    <button id="prev-btn" class="absolute left-2 md:left-8 text-white text-4xl md:text-5xl cursor-pointer hover:text-gray-300 p-2 md:p-4">
       &#8249;
     </button>
     
-    <img id="lightbox-img" src="" alt="Image agrandie" class="max-w-3xl max-h-[70vh] object-contain" />
+    <img id="lightbox-img" src="" alt="Image agrandie" class="max-w-full md:max-w-3xl max-h-[70vh] object-contain" />
     
-    {/* Flèche droite */}
-    <button id="next-btn" class="absolute right-8 text-white text-5xl cursor-pointer hover:text-gray-300 p-4">
+    {/* Flèche droite - responsive */}
+    <button id="next-btn" class="absolute right-2 md:right-8 text-white text-4xl md:text-5xl cursor-pointer hover:text-gray-300 p-2 md:p-4">
       &#8250;
     </button>
   </div>
@@ -258,10 +258,10 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
     }
   </script>
 
-  {/* Texte de fin */}
+  {/* Texte de fin - responsive */}
   {record.txtfin && (
-    <div class="w-full px-20 pb-10 flex justify-center">
-      <p class="text-black text-[16px] bg-white p-4 border-[5px] border-white max-w-3xl whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtfin}</p>
+    <div class="w-full px-4 md:px-10 lg:px-20 pb-6 md:pb-8 lg:pb-10 flex justify-center">
+      <p class="text-black text-sm md:text-base lg:text-[16px] bg-white p-3 md:p-4 border-[3px] md:border-[5px] border-white max-w-full md:max-w-2xl lg:max-w-3xl whitespace-pre-wrap" style="font-family: 'Cal Sans', sans-serif; outline: 3px solid black; outline-offset: 0;">{record.txtfin}</p>
     </div>
   )}
 

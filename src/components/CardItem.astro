@@ -2,8 +2,8 @@
 const { record, imgUrl, align = "left" } = Astro.props;
 ---
 
-<div class={`flex ${align === "right" ? "sm:flex-row-reverse" : "sm:flex-row"} items-start gap-6`}>
-  <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
+<div class={`flex flex-col ${align === "right" ? "sm:flex-row-reverse" : "sm:flex-row"} items-start gap-4 sm:gap-6`}>
+  <div class="relative bg-white overflow-hidden shadow-sm w-full sm:w-[468px] sm:min-w-[468px] sm:max-w-[468px] flex-none">
     <div class="p-3">
       <div class="relative">
         <div class="aspect-[468/328] w-full overflow-hidden">
@@ -11,10 +11,10 @@ const { record, imgUrl, align = "left" } = Astro.props;
         </div>
 
         <div class="absolute top-3 right-4">
-          <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">{record?.categorie}</span>
+          <span class="font-[ClimateCrisis] text-[18px] sm:text-[22px] tracking-tight text-white text-outline">{record?.categorie}</span>
         </div>
         <div class="absolute bottom-3 left-4">
-          <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline">{record?.date}</span>
+          <span class="font-[ClimateCrisis] text-[18px] sm:text-[22px] tracking-tight text-white text-outline">{record?.date}</span>
         </div>
       </div>
 
@@ -29,7 +29,7 @@ const { record, imgUrl, align = "left" } = Astro.props;
       </style>
 
       <div class={`w-full mt-3 ${align === "left" ? "sm:text-right" : "sm:text-left"}`}>
-        <h3 class="font-[ClimateCrisis] text-[38px] sm:text-[43px] leading-none mt-1">{record?.titre}</h3>
+        <h3 class="font-[ClimateCrisis] text-[32px] sm:text-[38px] md:text-[43px] leading-none mt-1">{record?.titre}</h3>
       </div>
     </div>
   </div>
