@@ -112,7 +112,7 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                             <img 
                               src={serieUrl} 
                               alt="Photo de série"
-                              class="w-full h-48 md:h-56 lg:h-64 object-cover hover:scale-105 transition-transform duration-300"
+                              class="w-full h-48 md:h-56 lg:h-64 object-cover  hover:scale-105 hover:-rotate-5 hover:border-3 hover:border-white transition-transform duration-300"
                             />
                           </div>
                         );
@@ -146,11 +146,11 @@ const hasColl2 = record.fondcoll2 && record.titlecoll2 && record.desccoll2 && re
                       {record.seriecoll2.map((seriePhoto) => {
                         const serieUrl = pb.files.getUrl(record, seriePhoto);
                         return (
-                          <div class="cursor-pointer gallery-item hover:-rotate-30">
+                          <div class="cursor-pointer gallery-item">
                             <img 
                               src={serieUrl} 
                               alt="Photo de série 2"
-                              class="w-full h-48 md:h-56 lg:h-64 object-cover hover:scale-105 transition-transform duration-300"
+                              class="w-full h-48 md:h-56 lg:h-64 object-cover  hover:scale-105 hover:-rotate-5 hover:border-3 hover:border-white transition-transform duration-300"
                             />
                           </div>
                         );

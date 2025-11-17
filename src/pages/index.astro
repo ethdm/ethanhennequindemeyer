@@ -112,7 +112,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
   <div class="bg-transparent overflow-hidden h-8 sm:h-12 w-full relative -translate-y-8 sm:-translate-y-12">
     <style>
       @keyframes scroll { 0% { transform: translateX(0%);} 100% { transform: translateX(-100%);} }
-      .scrolling-text { display:inline-block; white-space:nowrap; animation:scroll 20s linear infinite; font-family:"Cal Sans",sans-serif; font-size:clamp(14px, 4vw, 24px); color:black; padding-right:50px; }
+      .scrolling-text { display:inline-block; white-space:nowrap; animation:scroll 30s linear infinite; font-family:"Cal Sans",sans-serif; font-size:clamp(14px, 4vw, 24px); color:black; padding-right:50px; }
       .scrolling-container { display:flex; height:100%; align-items:center; width:fit-content; }
     </style>
     <div class="scrolling-container">
@@ -141,7 +141,7 @@ const filteredItems = urlCat && urlCat !== "ALL"
           categoriesUI.map((category, index) => (
             <div key={index} class="group flex flex-col md:flex-row md:items-start gap-4 md:gap-12 cursor-pointer md:h-[45px]">
               <div class="w-full md:w-64 md:flex-shrink-0 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-                <ul class="space-y-1 md:space-y-2">
+                <ul class="space-y-0 md:space-y-0">
                   {(category.traits ?? []).map((trait, traitIndex) => (
                     <li key={traitIndex} class="flex items-start gap-2 md:gap-3">
                       <span class="text-black text-lg md:text-2xl mt-0 flex-shrink-0">•</span>

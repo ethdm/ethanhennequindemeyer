@@ -79,7 +79,7 @@ import propos from '../assets/propos.webp';
 
   <!-- Paragraphe 5 - Me contacter -->
   <section
-    class="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 px-4 sm:px-8 md:px-12 lg:px-16 opacity-0 translate-y-8 transition-all duration-700 mt-12 sm:mt-16 md:mt-20 lg:mt-115 mb-12 sm:mb-16 md:mb-20 lg:mb-115"
+    class="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 px-4 sm:px-8 md:px-12 lg:px-16 opacity-0 translate-y-8 transition-all duration-700 mt-12 sm:mt-16 md:mt-20 lg:mt-2 mb-12 sm:mb-16 md:mb-20 lg:mb-2"
     data-animate
     data-paragraph="5"
     id="idencre-contact"
@@ -87,7 +87,7 @@ import propos from '../assets/propos.webp';
     <div class="max-w-6xl mx-auto">
       <!-- Titre -->
       <h2
-        class="text-white text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-12 sm:mb-16 md:mb-20"
+        class="text-white text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mt-10 mb-12 sm:mb-16 md:mb-20"
         style="font-family: 'Climate Crisis', sans-serif;"
       >
         Me contacter
@@ -259,6 +259,46 @@ import propos from '../assets/propos.webp';
       </div>
     </div>
   </section>
+
+  <form class="w-full max-w-4xl mx-auto px-2 py-8 space-y-4 md:space-y-6 mb-20"
+  action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="a4275a14-6e96-4544-b52a-4dc0e0cb61d3">
+  <input type="hidden" name="redirect" value="https://ton-site.com/merci">
+  <input type="hidden" name="subject" value="Nouveau message de contact">
+  <input type="hidden" name="from_name" value="Formulaire Contact">
+  <!-- Champ Nom -->
+  <input
+    type="text"
+    placeholder="Nom"
+    class="w-full px-5 py-4 md:px-6 md:py-5 text-base md:text-lg bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+    style="font-family: 'Cal Sans', sans-serif;"
+  />
+
+  <!-- Champ Mail -->
+  <input
+    type="email"
+    placeholder="Mail"
+    class="w-full px-5 py-4 md:px-6 md:py-5 text-base md:text-lg bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+    style="font-family: 'Cal Sans', sans-serif;"
+  />
+
+  <!-- Champ Message -->
+  <textarea
+    placeholder="Votre message..."
+    rows="6"
+    class="w-full px-5 py-4 md:px-6 md:py-5 text-base md:text-lg bg-white text-black placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-white"
+    style="font-family: 'Cal Sans', sans-serif;"
+  ></textarea>
+
+  <!-- Bouton Submit (optionnel) -->
+  <button
+    type="submit"
+    class="w-full md:w-auto px-8 py-4 bg-white text-black font-medium text-base md:text-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+    style="font-family: 'Cal Sans', sans-serif;"
+  >
+    Envoyer
+  </button>
+</form>
 
   
 
