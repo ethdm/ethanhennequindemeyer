@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 
 var path = "";
-path = "https://https://portfolio.ethan-hennequindemeyer.fr/:443";
+path = "https://portfolio.ethan-hennequindemeyer.fr/";
 const pb = new PocketBase(path);
 
 export { pb as p };
