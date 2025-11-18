@@ -1,5 +1,5 @@
 import { c as createComponent, e as createAstro, m as maybeRenderHead, d as addAttribute, b as renderTemplate, r as renderComponent } from '../../chunks/astro/server_TzH25wzC.mjs';
-import { $ as $$Layout } from '../../chunks/Layout_wrHfq5RX.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_DEH3c9Ad.mjs';
 import PocketBase from 'pocketbase';
 import 'clsx';
 /* empty css                                      */
@@ -32,7 +32,7 @@ var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __f
 var _a;
 const prerender = false;
 const $$Projets = createComponent(async ($$result, $$props, $$slots) => {
-  const pbUrl = "https://portfolio.ethan-hennequindemeyer.fr/";
+  const pbUrl = "http://127.0.0.1:8090";
   const pb = new PocketBase(pbUrl);
   const res = await pb.collection("card_p_projets").getList(1, 500, {
     sort: "created"
