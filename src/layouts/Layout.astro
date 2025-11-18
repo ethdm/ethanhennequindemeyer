@@ -15,18 +15,13 @@ import CustomCursor from '../components/CustomCursor.astro';
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <CustomCursor />
   <body
     class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"
     style={`background-image: url('${fond1.src}');`}
   >
-    
+    <CustomCursor />
     <Header />
-
-
     <slot />
-    
     <Footer />
   </body>
 </html>
-
