@@ -46,7 +46,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22020
         script: |
-          cd /var/www/ethanhennequindemeyer/dist/server
+          cd /var/www/ethanhennequindemeyer/dist/server/
           npm ci
           npm install astro send server-destroy
           PORT=9999 pm2 restart portfolio || PORT=9999 pm2 start entry.mjs --name portfolio
