@@ -32,7 +32,7 @@ var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __f
 var _a;
 const prerender = false;
 const $$Projets = createComponent(async ($$result, $$props, $$slots) => {
-  const pbUrl = "http://127.0.0.1:8090";
+  const pbUrl = "https://portfolio.ethan-hennequindemeyer.fr/";
   const pb = new PocketBase(pbUrl);
   const res = await pb.collection("card_p_projets").getList(1, 500, {
     sort: "created"
