@@ -1,7 +1,8 @@
 import PocketBase from 'pocketbase';
 
-const url = import.meta.env.PUBLIC_PB_URL ?? 'http://127.0.0.1:8090';
-const pb = new PocketBase(url);
-
-
+var path='';
+if(import.meta.env.MODE === 'development')
+    path = 'http://localhost:8090'    //localhost = machine de dev
+else path = 'https://portfolio.ethanhennequindemeyer.fr:443'   //url du site 
+const pb = new PocketBase(path);
 export default pb;
