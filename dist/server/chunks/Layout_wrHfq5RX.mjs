@@ -69,7 +69,7 @@ const $$Astro = createAstro();
 const $$Layout = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Layout;
-  return renderTemplate`<html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator"${addAttribute(Astro2.generator, "content")}><title>Astro Basics</title>${renderHead()}</head> <body class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"${addAttribute(`background-image: url('${fond1.src}');`, "style")}> ${renderComponent($$result, "CustomCursor", $$CustomCursor, {})} ${renderComponent($$result, "Header", $$Header, {})} ${renderSlot($$result, $$slots["default"])} ${renderComponent($$result, "Footer", $$Footer, {})} </body></html>`;
+  return renderTemplate`<html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator"${addAttribute(Astro2.generator, "content")}><title>Astro Basics</title>${renderHead()}</head> ${renderComponent($$result, "CustomCursor", $$CustomCursor, {})} <body class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"${addAttribute(`background-image: url('${fond1.src}');`, "style")}> ${renderComponent($$result, "Header", $$Header, {})} ${renderSlot($$result, $$slots["default"])} ${renderComponent($$result, "Footer", $$Footer, {})} </body></html>`;
 }, "C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/src/layouts/Layout.astro", void 0);
 
 export { $$Layout as $, fond1 as f };

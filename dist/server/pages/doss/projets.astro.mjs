@@ -1,5 +1,5 @@
 import { c as createComponent, e as createAstro, m as maybeRenderHead, d as addAttribute, b as renderTemplate, r as renderComponent } from '../../chunks/astro/server_TzH25wzC.mjs';
-import { $ as $$Layout } from '../../chunks/Layout_D9Sr3VWk.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_wrHfq5RX.mjs';
 import PocketBase from 'pocketbase';
 import 'clsx';
 /* empty css                                      */
