@@ -8,12 +8,12 @@ export const prerender = false;
 
 const pbUrl = import.meta.env.PUBLIC_PB_URL;
 if (!pbUrl) {
-  throw new Error("PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.");
+  throw new Error(
+    "PUBLIC_PB_URL manquant. Ajoute PUBLIC_PB_URL dans .env et redémarre le serveur.",
+  );
 }
-
-
-
 const pb = new PocketBase(pbUrl);
+
 
 const res = await pb.collection("card_p_projets").getList(1, 500, {
   sort: "created",
