@@ -2,10 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import pb from '../../lib/pb';
 
+
 export const prerender = false;
+
 
 const id = Astro.params.id;
 const record = await pb.collection('page_projet_classique').getOne(id);
+
 
 const heroUrl = pb.files.getUrl(record, record.hero);
 const fondUrl = pb.files.getUrl(record, record.fond);
@@ -17,115 +20,125 @@ const imagefUrl = pb.files.getUrl(record, record.imagef);
 const contenumultiUrl = record.contenumulti ? pb.files.getUrl(record, record.contenumulti) : null;
 const miniaUrl = record.minia ? pb.files.getUrl(record, record.minia) : null;
 
+
 // Fonction pour extraire l'ID YouTube de l'URL
 function getYouTubeID(url) {
-  if (!url) return null;
-  const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
-  const match = url.match(regex);
-  return match ? match[1] : null;
+  if (!url) return null;
+  const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
 }
+
 
 const youtubeID = getYouTubeID(record.youtube_url);
 ---
 
+
 <Layout title={record.title}>
-  {/* Image de fond sticky derrière tout */}
-  <div class="fixed top-0 left-0 w-full h-screen -z-10">
-    <img 
-      src={fondUrl} 
-      alt="Background"
-      class="w-full h-full object-cover"
-    />
-  </div>
+  {/* Image de fond sticky derrière tout */}
+  <div class="fixed top-0 left-0 w-full h-screen -z-10">
+    <img 
+      src={fondUrl} 
+      alt="Background"
+      class="w-full h-full object-cover"
+    />
+  </div>
 
-  <div class="relative w-full h-screen">
-    {/* Image hero en pleine largeur */}
-    <img 
-      src={heroUrl} 
-      alt={record.title}
-      class="w-full h-full object-cover"
-    />
-    
-    {/* Texte en bas à gauche */}
-    <div class="absolute bottom-5 left-5 p-4 md:p-8 text-white">
-      <h1 class="text-[32px] md:text-[60px]" style="font-family: 'Climate Crisis', sans-serif;">{record.title}</h1>
-      <h2 class="text-[18px] md:text-[32px] max-w-2xl" style="font-family: 'Climate Crisis', sans-serif;">{record.subtitle}</h2>
-      <p class="text-[14px] md:text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
-    </div>
-  </div>
 
-  {/* txt1 à gauche + ill1 à droite */}
-  {(record.txt1 && record.ill1) && (
-    <div class="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
-      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt1}</p>
-      <img src={ill1Url} alt="Illustration 1" class="w-full md:max-w-md h-auto" />
-    </div>
-  )}
+  <div class="relative w-full h-screen">
+    {/* Image hero en pleine largeur */}
+    <img 
+      src={heroUrl} 
+      alt={record.title}
+      class="w-full h-full object-cover"
+    />
+    
+    {/* Texte en bas à gauche */}
+    <div class="absolute bottom-5 left-5 p-4 md:p-8 text-white">
+      <h1 class="text-[32px] md:text-[60px]" style="font-family: 'Climate Crisis', sans-serif;">{record.title}</h1>
+      <h2 class="text-[18px] md:text-[32px] max-w-2xl" style="font-family: 'Climate Crisis', sans-serif;">{record.subtitle}</h2>
+      <p class="text-[14px] md:text-[16px] max-w-2xl" style="font-family: 'Cal Sans', sans-serif;">{record.desc}</p>
+    </div>
+  </div>
 
-  {/* ill2 à gauche + txt2 à droite */}
-  {(record.ill2 && record.txt2) && (
-    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
-      <img src={ill2Url} alt="Illustration 2" class="w-full md:max-w-md h-auto" />
-      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt2}</p>
-    </div>
-  )}
 
-  {/* txt3 à gauche + ill3 à droite */}
-  {(record.txt3 && record.ill3) && (
-    <div class="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
-      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt3}</p>
-      <img src={ill3Url} alt="Illustration 3" class="w-full md:max-w-md h-auto" />
-    </div>
-  )}
+  {/* txt1 à gauche + ill1 à droite */}
+  {(record.txt1 && record.ill1) && (
+    <div class="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt1}</p>
+      <img src={ill1Url} alt="Illustration 1" class="w-full md:max-w-md h-auto" />
+    </div>
+  )}
 
-  {/* ill4 à gauche + txt4 à droite */}
-  {(record.ill4 && record.txt4) && (
-    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
-      <img src={ill4Url} alt="Illustration 4" class="w-full md:max-w-md h-auto" />
-      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt4}</p>
-    </div>
-  )}
 
-  {/* Section vidéo YouTube OU média avec miniature */}
-  {youtubeID ? (
-    <div class="w-full flex flex-col items-center px-5 md:px-20 py-8">
-      <div class="max-w-4xl w-full aspect-video">
-        <iframe 
-          src={`https://www.youtube.com/embed/${youtubeID}`}
-          class="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        />
-      </div>
-      {record.txtmedia && (
-        <p class="text-black text-[14px] md:text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
-      )}
-    </div>
-  ) : (record.contenumulti && record.minia) && (
-    <div class="w-full flex flex-col items-center px-5 md:px-20 py-8">
-      <div class="max-w-4xl w-full">
-        <video 
-          controls 
-          poster={miniaUrl}
-          class="w-full h-auto"
-        >
-          <source src={contenumultiUrl} type="video/mp4" />
-          <source src={contenumultiUrl} type="audio/mpeg" />
-          Votre navigateur ne supporte pas la lecture de ce contenu.
-        </video>
-      </div>
-      {record.txtmedia && (
-        <p class="text-black text-[14px] md:text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
-      )}
-    </div>
-  )}
+  {/* ill2 à gauche + txt2 à droite */}
+  {(record.ill2 && record.txt2) && (
+    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <img src={ill2Url} alt="Illustration 2" class="w-full md:max-w-md h-auto" />
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt2}</p>
+    </div>
+  )}
 
-  {/* Image finale pleine largeur */}
-  <div class="w-full">
-    <img 
-      src={imagefUrl} 
-      alt="Image finale"
-      class="w-full h-auto object-cover"
-    />
-  </div>
+
+  {/* txt3 à gauche + ill3 à droite */}
+  {(record.txt3 && record.ill3) && (
+    <div class="w-full flex flex-col md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt3}</p>
+      <img src={ill3Url} alt="Illustration 3" class="w-full md:max-w-md h-auto" />
+    </div>
+  )}
+
+
+  {/* ill4 à gauche + txt4 à droite */}
+  {(record.ill4 && record.txt4) && (
+    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between px-5 md:px-20 py-8 gap-8">
+      <img src={ill4Url} alt="Illustration 4" class="w-full md:max-w-md h-auto" />
+      <p class="text-white text-[14px] md:text-[16px] bg-black w-full md:max-w-md p-4 border-[5px] border-black" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txt4}</p>
+    </div>
+  )}
+
+
+  {/* Section vidéo YouTube OU média avec miniature */}
+  {youtubeID ? (
+    <div class="w-full flex flex-col items-center px-5 md:px-20 py-8">
+      <div class="max-w-4xl w-full aspect-video">
+        <iframe 
+          src={`https://www.youtube.com/embed/${youtubeID}`}
+          class="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      </div>
+      {record.txtmedia && (
+        <p class="text-black text-[14px] md:text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
+      )}
+    </div>
+  ) : (record.contenumulti && record.minia) && (
+    <div class="w-full flex flex-col items-center px-5 md:px-20 py-8">
+      <div class="max-w-4xl w-full">
+        <video 
+          controls 
+          poster={miniaUrl}
+          class="w-full h-auto"
+        >
+          <source src={contenumultiUrl} type="video/mp4" />
+          <source src={contenumultiUrl} type="audio/mpeg" />
+          Votre navigateur ne supporte pas la lecture de ce contenu.
+        </video>
+      </div>
+      {record.txtmedia && (
+        <p class="text-black text-[14px] md:text-[16px] bg-white max-w-4xl mt-4 p-4 w-full" style="font-family: 'Cal Sans', sans-serif; outline: 5px solid black;">{record.txtmedia}</p>
+      )}
+    </div>
+  )}
+
+
+  {/* Image finale pleine largeur */}
+  <div class="w-full">
+    <img 
+      src={imagefUrl} 
+      alt="Image finale"
+      class="w-full h-auto object-cover"
+    />
+  </div>
 </Layout>
