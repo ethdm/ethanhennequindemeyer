@@ -4,39 +4,76 @@ import fond2 from "../../assets/fond2.webp";
 
 /**
  * Page 100 % statique avec 4 carousels :
- * - Photographie : /thea + /photo/81k8ohmp9jzyuok + /photo/27nwxr05edcmal9
+ * - Photographie : /thea + /photo/81k8ohmp9jzyuok + /photo/27nwxr05edcmal9 + /photo/qmqpzp1zoc47fuz
  * - Audiovisuel  : /doss/143nv0gmg3quylf
  * - Évenementiel : /doss/ikjkgkf3etexxw6
  * - Autre        : /doss/fcxzx5pggsizv59
+ *
+ * Pour chaque card, un lien d'image prévu dans src/assets/card/
  */
+
+type StaticCard = {
+  href: string;
+  label: string;
+  img: string; // chemin (ou futur chemin) de l'image de card
+};
 
 const orderedCats = ["Photographie", "Audiovisuel", "Évenementiel", "Autre"];
 
-const mapByCat = new Map<string, { href: string; label: string }[]>([
+const mapByCat = new Map<string, StaticCard[]>([
   [
     "Photographie",
     [
-      { href: "/thea", label: "THÉA" },
-      { href: "/photo/81k8ohmp9jzyuok", label: "Projet photo 1" },
-      { href: "/photo/27nwxr05edcmal9", label: "Projet photo 2" },
+      {
+        href: "/thea",
+        label: "THÉA",
+        img: "/src/assets/card/thea.webp", // déjà existant
+      },
+      {
+        href: "/photo/81k8ohmp9jzyuok",
+        label: "Projet photo 1",
+        img: "/46.webp",
+      },
+      {
+        href: "/photo/27nwxr05edcmal9",
+        label: "Projet photo 2",
+        img: "/fimu.webp",
+      },
+      {
+        href: "/photo/qmqpzp1zoc47fuz",
+        label: "Projet photo 3",
+        img: "/spa.webp",
+      },
     ],
   ],
   [
     "Audiovisuel",
     [
-      { href: "/doss/143nv0gmg3quylf", label: "Projet audiovisuel" },
+      {
+        href: "/doss/143nv0gmg3quylf",
+        label: "Projet audiovisuel",
+        img: "/sc.webp",
+      },
     ],
   ],
   [
     "Évenementiel",
     [
-      { href: "/doss/ikjkgkf3etexxw6", label: "Projet évènementiel" },
+      {
+        href: "/doss/ikjkgkf3etexxw6",
+        label: "Projet évènementiel",
+        img: "/ma.webp",
+      },
     ],
   ],
   [
     "Autre",
     [
-      { href: "/doss/fcxzx5pggsizv59", label: "Projet autre" },
+      {
+        href: "/doss/fcxzx5pggsizv59",
+        label: "Projet autre",
+        img: "/hpns.webp",
+      },
     ],
   ],
 ]);
@@ -191,7 +228,7 @@ const catToSlug = Object.fromEntries(orderedCats.map((c) => [c, uniqueSlug(c)]))
                 {/* Autres cartes de ce carousel */}
                 {list
                   .filter((item) => !(catIndex === 0 && item.href === "/thea"))
-                  .map((item, i) => (
+                  .map((item) => (
                     <a
                       href={item.href}
                       class="snap-center shrink-0 w-[468px] group block"
@@ -203,10 +240,13 @@ const catToSlug = Object.fromEntries(orderedCats.map((c) => [c, uniqueSlug(c)]))
                           <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
                             <div class="p-3">
                               <div class="relative">
-                                <div class="aspect-[468/328] w-full overflow-hidden bg-black/10">
-                                  <div class="w-full h-full flex items-center justify-center text-sm text-neutral-700">
-                                    {item.label}
-                                  </div>
+                                <div class="aspect-[468/328] w-full overflow-hidden bg-black/5">
+                                  <img
+                                    src={item.img}
+                                    alt={item.label}
+                                    class="w-full h-full object-cover"
+                                    loading="lazy"
+                                  />
                                 </div>
                               </div>
 
