@@ -101,7 +101,6 @@ function uniqueSlug(cat: string) {
 const catToSlug = Object.fromEntries(orderedCats.map((c) => [c, uniqueSlug(c)]));
 ---
 
-<body style={`background-image: url('${fond2.src}'); overflow-x: hidden;`}>
   <Layout>
     {/* Styles scrollbar horizontale fine + masquage débordement */}
     <style is:global>
@@ -319,7 +318,6 @@ const catToSlug = Object.fromEntries(orderedCats.map((c) => [c, uniqueSlug(c)]))
       }
     </style>
   </Layout>
-</body>
 
 <!-- Script ancres smooth + surbrillance active -->
 <script type="module">

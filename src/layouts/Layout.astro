@@ -1,31 +1,28 @@
----
+--- 
 import "../styles/global.css";
 import Header from "../components/header.astro";
 import fond1 from '../assets/fond1.webp';
 import Footer from '../components/footer.astro';
 import CustomCursor from '../components/CustomCursor.astro';
+
+interface Props {
+  background?: string;
+}
+
+const { background } = Astro.props;
+const bgImage = background ?? fond1.src;
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
-  </head>
+  <head>...</head>
   <CustomCursor />
   <body
     class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"
-    style={`background-image: url('${fond1.src}');`}
+    style={`background-image: url('${bgImage}');`}
   >
-    
     <Header />
-
-
     <slot />
-    
     <Footer />
   </body>
 </html>
-
