@@ -1,47 +1,45 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import CardProjets from "../../components/CardProjets.astro";
 import fond2 from "../../assets/fond2.webp";
 
-// Données entièrement statiques
-import { projets } from "../../data/projets"; // le fichier ci‑dessus
+/**
+ * Page 100 % statique avec 4 carousels :
+ * - Photographie : /thea + /photo/81k8ohmp9jzyuok + /photo/27nwxr05edcmal9
+ * - Audiovisuel  : /doss/143nv0gmg3quylf
+ * - Évenementiel : /doss/ikjkgkf3etexxw6
+ * - Autre        : /doss/fcxzx5pggsizv59
+ */
 
-// Plus de prerender = false → cette page devient statique
-// export const prerender = true; // (optionnel, c'est la valeur par défaut dans Astro)
+const orderedCats = ["Photographie", "Audiovisuel", "Évenementiel", "Autre"];
 
-// Normalisation des catégories (au cas où tu gardes un typage plus souple)
-function normalizeCategories(val: unknown): string[] {
-  if (Array.isArray(val)) return val.filter(Boolean) as string[];
-  if (typeof val === "string" && val.trim() !== "") return [val];
-  return [];
-}
-
-// items = ce que tu faisais avec PocketBase, mais basé sur `projets`
-const items = projets.map((r) => ({
-  record: r,
-  imgUrl: r.imgUrl ?? "",
-}));
-
-// Regroupement par catégories (identique à ta version dynamique)
-const mapByCat = new Map<string, { record: any; imgUrl: string }[]>();
-
-for (const it of items) {
-  const cats = normalizeCategories(it.record.categorie);
-  if (cats.length === 0) {
-    const key = "Sans catégorie";
-    mapByCat.set(key, [...(mapByCat.get(key) ?? []), it]);
-  } else {
-    for (const c of cats) {
-      mapByCat.set(c, [...(mapByCat.get(c) ?? []), it]);
-    }
-  }
-}
-
-const allCats = Array.from(mapByCat.keys()).sort((a, b) => {
-  if (a === "Sans catégorie") return 1;
-  if (b === "Sans catégorie") return -1;
-  return a.localeCompare(b);
-});
+const mapByCat = new Map<string, { href: string; label: string }[]>([
+  [
+    "Photographie",
+    [
+      { href: "/thea", label: "THÉA" },
+      { href: "/photo/81k8ohmp9jzyuok", label: "Projet photo 1" },
+      { href: "/photo/27nwxr05edcmal9", label: "Projet photo 2" },
+    ],
+  ],
+  [
+    "Audiovisuel",
+    [
+      { href: "/doss/143nv0gmg3quylf", label: "Projet audiovisuel" },
+    ],
+  ],
+  [
+    "Évenementiel",
+    [
+      { href: "/doss/ikjkgkf3etexxw6", label: "Projet évènementiel" },
+    ],
+  ],
+  [
+    "Autre",
+    [
+      { href: "/doss/fcxzx5pggsizv59", label: "Projet autre" },
+    ],
+  ],
+]);
 
 function slugifyCat(cat: string) {
   return cat
@@ -63,7 +61,7 @@ function uniqueSlug(cat: string) {
   return n === 1 ? base : `${base}-${n}`;
 }
 
-const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
+const catToSlug = Object.fromEntries(orderedCats.map((c) => [c, uniqueSlug(c)]));
 ---
 
 <body style={`background-image: url('${fond2.src}'); overflow-x: hidden;`}>
@@ -109,11 +107,12 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
           href="#all"
           class="px-3 py-1 rounded-full border border-white !text-white hover:bg-white/20 transition"
           style="font-family:'Cal Sans'"
-          >Toutes</a
         >
+          Toutes
+        </a>
 
         {
-          allCats.map((cat) => (
+          orderedCats.map((cat) => (
             <a
               href={`#${catToSlug[cat]}`}
               class="px-3 py-1 rounded-full border border-white !text-white hover:bg-white/20 transition"
@@ -128,7 +127,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
 
     {/* Section carousels */}
     <section id="all" class="mx-auto max-w-full overflow-hidden space-y-14">
-      {allCats.map((cat, catIndex) => {
+      {orderedCats.map((cat, catIndex) => {
         const list = mapByCat.get(cat) ?? [];
         const id = catToSlug[cat];
         return (
@@ -145,7 +144,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                 class="carousel-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-[246px] pb-4 pt-10"
                 style="scroll-padding-inline: 246px;"
               >
-                {/* Carte statique THÉA - seulement dans la première catégorie */}
+                {/* Carte statique THÉA - seulement dans le premier carousel (Photographie) */}
                 {catIndex === 0 && (
                   <div class="snap-center shrink-0 w-[468px] group">
                     <a href="/thea" class="block relative group-hover:z-20">
@@ -189,35 +188,39 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                   </div>
                 )}
 
-                {/* Cartes statiques dérivées des données PocketBase */}
-                {list.map(({ record, imgUrl }, i) => {
-                  let path = "/doss/";
-                  let pageId = record.page_autre;
-
-                  if (record.page_photo) {
-                    path = "/photo/";
-                    pageId = record.page_photo;
-                  }
-
-                  return (
+                {/* Autres cartes de ce carousel */}
+                {list
+                  .filter((item) => !(catIndex === 0 && item.href === "/thea"))
+                  .map((item, i) => (
                     <a
-                      href={`${path}${pageId}`}
+                      href={item.href}
                       class="snap-center shrink-0 w-[468px] group block"
                     >
                       <div class="relative group-hover:z-20">
                         <div
                           class="will-change-transform transition-transform transition-[filter] duration-150 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:duration-250 group-hover:ease-[cubic-bezier(.16,1,.3,1)] group-active:scale-[0.995] group-hover:scale-[1.06] group-hover:brightness-110"
                         >
-                          <CardProjets
-                            record={record}
-                            imgUrl={imgUrl}
-                            align={i % 2 === 0 ? "left" : "right"}
-                          />
+                          <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none">
+                            <div class="p-3">
+                              <div class="relative">
+                                <div class="aspect-[468/328] w-full overflow-hidden bg-black/10">
+                                  <div class="w-full h-full flex items-center justify-center text-sm text-neutral-700">
+                                    {item.label}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="w-full mt-3 sm:text-right">
+                                <h3 class="font-[ClimateCrisis] text-[32px] leading-none mt-1">
+                                  {item.label}
+                                </h3>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </a>
-                  );
-                })}
+                  ))}
               </div>
 
               {/* Wrapper pour les flèches */}
@@ -229,7 +232,13 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                   onclick="const root = this.closest('.relative'); const scroller = root?.querySelector('.carousel-scroll'); if (scroller) scroller.scrollBy({ left: -492, behavior: 'smooth' });"
                 >
                   <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                    <path d="M30 10 L18 24 L30 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path
+                      d="M30 10 L18 24 L30 38"
+                      stroke="currentColor"
+                      stroke-width="6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
                   </svg>
                 </button>
 
@@ -240,7 +249,13 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
                   onclick="const root = this.closest('.relative'); const scroller = root?.querySelector('.carousel-scroll'); if (scroller) scroller.scrollBy({ left: 492, behavior: 'smooth' });"
                 >
                   <svg width="32" height="32" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                    <path d="M18 10 L30 24 L18 38" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path
+                      d="M18 10 L30 24 L18 38"
+                      stroke="currentColor"
+                      stroke-width="6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
                   </svg>
                 </button>
               </div>
@@ -268,6 +283,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
 
 <!-- Script ancres smooth + surbrillance active -->
 <script type="module">
+  // Scroll doux pour toutes les ancres internes
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const id = a.getAttribute("href")?.slice(1);
@@ -279,6 +295,7 @@ const catToSlug = Object.fromEntries(allCats.map((c) => [c, uniqueSlug(c)]));
     });
   });
 
+  // Surbrillance de la puce active au scroll
   const chips = new Map();
   document.querySelectorAll('a[href^="#"]').forEach((chip) => {
     const href = chip.getAttribute("href") || "";
