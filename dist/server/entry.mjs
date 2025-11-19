@@ -37,7 +37,7 @@ const _args = {
     "client": "file:///C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/dist/client/",
     "server": "file:///C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/dist/server/",
     "host": false,
-    "port": 4321,
+    "port": 8087,
     "assets": "_astro",
     "experimentalStaticHeaders": false
 };
