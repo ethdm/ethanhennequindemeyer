@@ -1,10 +1,10 @@
 ---
 import "../styles/global.css";
 import Header from "../components/header.astro";
-import fond1 from '../assets/fond1.webp';
-import Footer from '../components/footer.astro';
-import CustomCursor from '../components/CustomCursor.astro';
-import favicon from '../assets/favicon.svg';
+import fond1 from "../assets/fond1.webp";
+import Footer from "../components/footer.astro";
+import CustomCursor from "../components/CustomCursor.astro";
+import favicon from "../assets/favicon.svg";
 ---
 
 <!doctype html>
@@ -21,11 +21,153 @@ import favicon from '../assets/favicon.svg';
     class="bg-fixed bg-cover bg-center bg-no-repeat min-h-screen"
     style={`background-image: url('${fond1.src}');`}
   >
-    
-    <Header />
+    --- import {Image} from 'astro:assets'; import logo from '/public/logo.webp';
+    ---
+
+    <header
+      class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 md:px-8 py-4 bg-[#692AAD80]/85 backdrop-blur-md pointer-events-none"
+    >
+      <a href="/" class="flex items-center pointer-events-auto">
+        <Image src={logo} alt="Logo" class="h-12 w-12 md:h-16 md:w-16" />
+      </a>
+
+      <a
+        href="/"
+        class="text-lg md:text-[28px] text-white font-normal pointer-events-auto text-center flex-1 mx-4"
+        style="font-family: 'Climate Crisis', sans-serif;"
+      >
+        Ethan Hennequin De Meyer
+      </a>
+
+      <button
+        id="burger-btn"
+        class="md:hidden pointer-events-auto flex flex-col gap-1.5 w-8 h-8 justify-center items-center"
+        aria-label="Menu"
+        aria-expanded="false"
+      >
+        <span
+          class="w-6 h-0.5 bg-white block transition-all duration-300 ease-out"
+        ></span>
+        <span
+          class="w-6 h-0.5 bg-white block transition-all duration-300 ease-out"
+        ></span>
+        <span
+          class="w-6 h-0.5 bg-white block transition-all duration-300 ease-out"
+        ></span>
+      </button>
+
+      <nav
+        class="hidden md:flex gap-8 lg:gap-12 text-xl lg:text-[18px] font-normal pointer-events-auto"
+        style="font-family: 'Climate Crisis', sans-serif;"
+      >
+        <a
+          href="/doss/projetstat"
+          class="text-white hover:opacity-90 hover:-translate-y-0.5 transition"
+          >Projets (statique)</a
+        >
+        <a
+          href="/doss/projets"
+          class="text-white hover:opacity-90 hover:-translate-y-0.5 transition"
+          >Projets</a
+        >
+        <a
+          href="/apropos"
+          class="text-white hover:opacity-90 hover:-translate-y-0.5 transition"
+          >À propos</a
+        >
+        <a
+          href="/apropos#idencre-contact"
+          class="text-white hover:opacity-90 hover:-translate-y-0.5 transition"
+          >Contact</a
+        >
+      </nav>
+
+      <nav
+        id="mobile-nav"
+        class="hidden absolute top-full left-0 right-0 bg-[#692AAD]/95 backdrop-blur-md flex-col gap-8 px-8 py-8 md:hidden pointer-events-auto shadow-lg"
+        style="font-family: 'Climate Crisis', sans-serif;"
+      >
+        <a
+          href="/doss/projetstat"
+          class="text-white text-[14px] font-normal hover:opacity-90 hover:translate-x-2 transition-all duration-300"
+          >Projets (statique)</a
+        >
+        <a
+          href="/doss/projets"
+          class="text-white text-[14px] font-normal hover:opacity-90 hover:translate-x-2 transition-all duration-300"
+          >Projets</a
+        >
+        <a
+          href="/apropos"
+          class="text-white text-[14px] font-normal hover:opacity-90 hover:translate-x-2 transition-all duration-300"
+          >À propos</a
+        >
+        <a
+          href="/apropos#idencre-contact"
+          class="text-white text-[14px] font-normal hover:opacity-90 hover:translate-x-2 transition-all duration-300"
+          >Contact</a
+        >
+      </nav>
+    </header>
+
+    <script>
+      const burgerBtn = document.getElementById("burger-btn");
+      const mobileNav = document.getElementById("mobile-nav");
+      const lines = burgerBtn?.querySelectorAll("span");
+
+      burgerBtn?.addEventListener("click", () => {
+        const isOpen = !mobileNav?.classList.contains("hidden");
+
+        mobileNav?.classList.toggle("hidden");
+        burgerBtn?.setAttribute("aria-expanded", String(!isOpen));
+
+        if (lines) {
+          if (isOpen) {
+            lines[0].style.transform = "rotate(0) translateY(0)";
+            lines[1].style.opacity = "1";
+            lines[2].style.transform = "rotate(0) translateY(0)";
+          } else {
+            lines[0].style.transform = "rotate(45deg) translateY(8px)";
+            lines[1].style.opacity = "0";
+            lines[2].style.transform = "rotate(-45deg) translateY(-8px)";
+          }
+        }
+      });
+
+      mobileNav?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.add("hidden");
+          burgerBtn?.setAttribute("aria-expanded", "false");
+
+          if (lines) {
+            lines[0].style.transform = "rotate(0) translateY(0)";
+            lines[1].style.opacity = "1";
+            lines[2].style.transform = "rotate(0) translateY(0)";
+          }
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !burgerBtn?.contains(e.target as Node) &&
+          !mobileNav?.contains(e.target as Node)
+        ) {
+          if (!mobileNav?.classList.contains("hidden")) {
+            mobileNav?.classList.add("hidden");
+            burgerBtn?.setAttribute("aria-expanded", "false");
+
+            if (lines) {
+              lines[0].style.transform = "rotate(0) translateY(0)";
+              lines[1].style.opacity = "1";
+              lines[2].style.transform = "rotate(0) translateY(0)";
+            }
+          }
+        }
+      });
+    </script>
 
     <slot />
-    
+
     <Footer />
   </body>
 </html>
