@@ -2,21 +2,10 @@
 import Layout from "../../layouts/Layout.astro";
 import fond2 from "../../assets/fond2.webp";
 
-/**
- * Page 100 % statique avec 4 carousels :
- * - Photographie : /thea + /photo/81k8ohmp9jzyuok + /photo/27nwxr05edcmal9 + /photo/qmqpzp1zoc47fuz
- * - Audiovisuel  : /doss/143nv0gmg3quylf
- * - Évenementiel : /doss/ikjkgkf3etexxw6
- * - Autre        : /doss/fcxzx5pggsizv59
- *
- * Pour chaque card, un lien d'image prévu dans src/assets/card/
- */
-
 type StaticCard = {
   href: string;
   label: string;
-  img: string; // chemin (ou futur chemin) de l'image de card
-};
+  img: string;
 
 const orderedCats = ["Photographie", "Audiovisuel", "Évenementiel","Design graphique & Com'", "Autre"];
 
