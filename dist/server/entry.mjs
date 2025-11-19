@@ -1,26 +1,28 @@
 import { renderers } from './renderers.mjs';
 import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_Dqya3tb8.mjs';
-import { manifest } from './manifest_DDDrUgFn.mjs';
+import { manifest } from './manifest_Dz5klgPN.mjs';
 
 const serverIslandMap = new Map();;
 
 const _page0 = () => import('./pages/_image.astro.mjs');
 const _page1 = () => import('./pages/apropos.astro.mjs');
 const _page2 = () => import('./pages/doss/projets.astro.mjs');
-const _page3 = () => import('./pages/doss/_id_.astro.mjs');
-const _page4 = () => import('./pages/ml.astro.mjs');
-const _page5 = () => import('./pages/photo/_id_.astro.mjs');
-const _page6 = () => import('./pages/thea.astro.mjs');
-const _page7 = () => import('./pages/index.astro.mjs');
+const _page3 = () => import('./pages/doss/projetstat.astro.mjs');
+const _page4 = () => import('./pages/doss/_id_.astro.mjs');
+const _page5 = () => import('./pages/ml.astro.mjs');
+const _page6 = () => import('./pages/photo/_id_.astro.mjs');
+const _page7 = () => import('./pages/thea.astro.mjs');
+const _page8 = () => import('./pages/index.astro.mjs');
 const pageMap = new Map([
     ["node_modules/astro/dist/assets/endpoint/node.js", _page0],
     ["src/pages/apropos.astro", _page1],
     ["src/pages/doss/projets.astro", _page2],
-    ["src/pages/doss/[id].astro", _page3],
-    ["src/pages/ml.astro", _page4],
-    ["src/pages/photo/[id].astro", _page5],
-    ["src/pages/thea.astro", _page6],
-    ["src/pages/index.astro", _page7]
+    ["src/pages/doss/projetstat.astro", _page3],
+    ["src/pages/doss/[id].astro", _page4],
+    ["src/pages/ml.astro", _page5],
+    ["src/pages/photo/[id].astro", _page6],
+    ["src/pages/thea.astro", _page7],
+    ["src/pages/index.astro", _page8]
 ]);
 
 const _manifest = Object.assign(manifest, {
@@ -35,7 +37,7 @@ const _args = {
     "client": "file:///C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/dist/client/",
     "server": "file:///C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/dist/server/",
     "host": false,
-    "port": 8087,
+    "port": 4321,
     "assets": "_astro",
     "experimentalStaticHeaders": false
 };

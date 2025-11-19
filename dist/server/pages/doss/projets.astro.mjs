@@ -1,8 +1,9 @@
 import { c as createComponent, e as createAstro, m as maybeRenderHead, d as addAttribute, b as renderTemplate, r as renderComponent } from '../../chunks/astro/server_TzH25wzC.mjs';
-import { $ as $$Layout } from '../../chunks/Layout_DEH3c9Ad.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_CIzYNCem.mjs';
 import PocketBase from 'pocketbase';
 import 'clsx';
 /* empty css                                      */
+import { f as fond2 } from '../../chunks/fond2_BrorUZ5s.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();
@@ -13,26 +14,13 @@ const $$CardProjets = createComponent(($$result, $$props, $$slots) => {
   return renderTemplate`${maybeRenderHead()}<div${addAttribute(`flex ${align === "right" ? "sm:flex-row-reverse" : "sm:flex-row"} items-start gap-6`, "class")} data-astro-cid-ygbl6fbx> <div class="relative bg-white overflow-hidden shadow-sm w-[468px] min-w-[468px] max-w-[468px] flex-none" data-astro-cid-ygbl6fbx> <div class="p-3" data-astro-cid-ygbl6fbx> <div class="relative" data-astro-cid-ygbl6fbx> <div class="aspect-[468/328] w-full overflow-hidden" data-astro-cid-ygbl6fbx> <img${addAttribute(imgUrl, "src")}${addAttribute(record?.titre ?? "image", "alt")} class="w-full h-full object-cover" loading="lazy" data-astro-cid-ygbl6fbx> </div> <!-- Desc & date--> <div class="absolute top-3 right-4 ml-2" data-astro-cid-ygbl6fbx> <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline" data-astro-cid-ygbl6fbx> ${Array.isArray(record?.desc) ? record.desc.join(" / ") : record?.desc} </span> </div> <div class="absolute bottom-3 left-4" data-astro-cid-ygbl6fbx> <span class="font-[ClimateCrisis] text-[22px] tracking-tight text-white text-outline" data-astro-cid-ygbl6fbx> ${record?.date} </span> </div> </div>  <!-- Titre --> <div${addAttribute(`w-full mt-3 ${align === "left" ? "sm:text-right" : "sm:text-left"}`, "class")} data-astro-cid-ygbl6fbx> <h3 class="font-[ClimateCrisis] text-[38px] sm:text-[34px] leading-none mt-1" data-astro-cid-ygbl6fbx> ${record?.titre} </h3> </div> </div> </div> </div> `;
 }, "C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/src/components/CardProjets.astro", void 0);
 
-const fond2 = new Proxy({"src":"/_astro/fond2.Bs96LYuP.webp","width":1728,"height":1117,"format":"webp"}, {
-						get(target, name, receiver) {
-							if (name === 'clone') {
-								return structuredClone(target);
-							}
-							if (name === 'fsPath') {
-								return "C:/Users/Ethan/Documents/MMI2/Portfolio/ethanhennequindemeyer/src/assets/fond2.webp";
-							}
-							
-							return target[name];
-						}
-					});
-
 var __freeze = Object.freeze;
 var __defProp = Object.defineProperty;
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(raw || cooked.slice()) }));
 var _a;
 const prerender = false;
 const $$Projets = createComponent(async ($$result, $$props, $$slots) => {
-  const pbUrl = "https://portfolio.ethan-hennequindemeyer.fr:443";
+  const pbUrl = "http://127.0.0.1:8090";
   const pb = new PocketBase(pbUrl);
   const res = await pb.collection("card_p_projets").getList(1, 500, {
     sort: "created"
