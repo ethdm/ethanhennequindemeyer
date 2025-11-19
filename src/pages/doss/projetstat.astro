@@ -18,11 +18,11 @@ type StaticCard = {
   img: string; // chemin (ou futur chemin) de l'image de card
 };
 
-const orderedCats = ["Photographie", "Audiovisuel", "Évenementiel", "Autre"];
+const orderedCats = ["1. Photographie", "2. Audiovisuel", "3. Évenementiel","4. Design graphique & Com'", "5. Autre"];
 
 const mapByCat = new Map<string, StaticCard[]>([
   [
-    "Photographie",
+    "1. Photographie",
     [
       {
         href: "/thea",
@@ -31,47 +31,57 @@ const mapByCat = new Map<string, StaticCard[]>([
       },
       {
         href: "/photo/81k8ohmp9jzyuok",
-        label: "Projet photo 1",
+        label: "N°46",
         img: "/46.webp",
       },
       {
         href: "/photo/27nwxr05edcmal9",
-        label: "Projet photo 2",
+        label: "FIMU",
         img: "/fimu.webp",
       },
       {
         href: "/photo/qmqpzp1zoc47fuz",
-        label: "Projet photo 3",
+        label: "24h de Spa",
         img: "/spa.webp",
       },
     ],
   ],
   [
-    "Audiovisuel",
+    "2. Audiovisuel",
     [
       {
         href: "/doss/143nv0gmg3quylf",
-        label: "Projet audiovisuel",
+        label: "Soirée Canap",
         img: "/sc.webp",
       },
     ],
   ],
   [
-    "Évenementiel",
+    "3. Évenementiel",
     [
       {
         href: "/doss/ikjkgkf3etexxw6",
-        label: "Projet évènementiel",
+        label: "MA Scène",
         img: "/ma.webp",
       },
     ],
   ],
   [
-    "Autre",
+    "4. Design graphique & Com'",
+    [
+      {
+        href: "/doss/vvfy2nbs7z92sh6",
+        label: "Com' MéMO",
+        img: "/memo.webp",
+      },
+    ],
+  ],
+  [
+    "5. Autre",
     [
       {
         href: "/doss/fcxzx5pggsizv59",
-        label: "Projet autre",
+        label: "Projet de MAO",
         img: "/hpns.webp",
       },
     ],
@@ -194,7 +204,7 @@ const catToSlug = Object.fromEntries(orderedCats.map((c) => [c, uniqueSlug(c)]))
                               <div class="relative">
                                 <div class="aspect-[468/328] w-full overflow-hidden">
                                   <img
-                                    src="/src/assets/card/thea.webp"
+                                    src="/thea.webp"
                                     alt="THÉA"
                                     class="w-full h-full object-cover"
                                     loading="lazy"
