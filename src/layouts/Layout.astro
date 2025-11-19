@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import Header from "../components/header.astro";
 import fond1 from "../assets/fond1.webp";
 import Footer from "../components/footer.astro";
 import CustomCursor from "../components/CustomCursor.astro";
@@ -110,6 +109,14 @@ import favicon from "../assets/favicon.svg";
       </nav>
     </header>
 
+
+
+    <slot />
+
+    <Footer />
+  </body>
+</html>
+
     <script>
       const burgerBtn = document.getElementById("burger-btn");
       const mobileNav = document.getElementById("mobile-nav");
@@ -165,9 +172,3 @@ import favicon from "../assets/favicon.svg";
         }
       });
     </script>
-
-    <slot />
-
-    <Footer />
-  </body>
-</html>
