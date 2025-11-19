@@ -18,7 +18,7 @@ const prerender = false;
 const $$Index = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Index;
-  const pbUrl = "https://portfolio.ethanhennequindemeyer.fr:443";
+  const pbUrl = "http://127.0.0.1:8090";
   const pb = new PocketBase(pbUrl);
   const res = await pb.collection("card_accueil").getList(1, 200, {
     sort: "created"
